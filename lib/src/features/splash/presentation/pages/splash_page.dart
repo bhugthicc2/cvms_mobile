@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../home/presentation/pages/home_page.dart';
+import '../../../login/presentation/pages/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,7 +12,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  static const Duration _minimumDisplayTime = Duration(seconds: );
+  static const Duration _minimumDisplayTime = Duration(seconds: 10);
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _SplashPageState extends State<SplashPage> {
     if (!mounted) return;
     Navigator.of(
       context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => const HomePage()));
+    ).pushReplacement(MaterialPageRoute(builder: (_) => const LoginPage()));
   }
 
   @override
@@ -35,21 +35,10 @@ class _SplashPageState extends State<SplashPage> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          // Background gradient with subtle image overlay
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[Color(0xFF0B3AA4), Color(0xFF06286C)],
-              ),
-            ),
-          ),
-          // Optional background image silhouette
-          Opacity(
-            opacity: 0.15,
+          // Adjustable background image
+          Positioned.fill(
             child: Image.asset(
-              'assets/images/splash bg.png',
+              'assets/splash bg.png',
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const SizedBox.shrink(),
             ),
@@ -77,6 +66,9 @@ class _SplashPageState extends State<SplashPage> {
                       'JRMSU - K',
                       style: textTheme.titleLarge?.copyWith(
                         color: const Color(0xFFF2C230),
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Sora',
                       ),
                     ),
                     const SizedBox(height: 8),
