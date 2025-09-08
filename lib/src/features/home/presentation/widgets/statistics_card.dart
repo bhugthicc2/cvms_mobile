@@ -14,12 +14,13 @@ class StatisticsCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
+            blurRadius: 15,
             offset: const Offset(0, 5),
+            spreadRadius: 0,
           ),
         ],
       ),
@@ -92,13 +93,26 @@ class StatisticsCard extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Text(
-                '$count ${percentage.toStringAsFixed(0)}%',
-                style: GoogleFonts.sora(
-                  fontSize: 16,
-                  color: const Color(0xFF2C3E50),
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    '$count',
+                    style: GoogleFonts.sora(
+                      fontSize: 16,
+                      color: const Color(0xFF2C3E50),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${percentage.toStringAsFixed(0)}%',
+                    style: GoogleFonts.sora(
+                      fontSize: 14,
+                      color: const Color(0xFF7F8C8D),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

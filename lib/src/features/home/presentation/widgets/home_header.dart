@@ -17,12 +17,12 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.35,
       decoration: const BoxDecoration(
-        color: Color(0xFF3498DB), // Blue color
+        color: Color.fromARGB(255, 25, 84, 244), // Blue color
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
         ),
       ),
       child: SafeArea(
@@ -74,7 +74,7 @@ class HomeHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               // Greeting section
               Align(
                 alignment: Alignment.centerLeft,
@@ -84,16 +84,16 @@ class HomeHeader extends StatelessWidget {
                     Text(
                       'Good Morning,',
                       style: GoogleFonts.sora(
-                        fontSize: 16,
-                        color: Colors.white70,
+                        fontSize: 14,
+                        color: Colors.white,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 8),
                     Text(
                       user.fullName,
                       style: GoogleFonts.sora(
-                        fontSize: 24,
+                        fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),

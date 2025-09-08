@@ -5,6 +5,7 @@ import '../controllers/login_controller.dart';
 import '../../data/repositories/login_repository.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../../home/presentation/pages/home_page.dart';
+import '../../../forgot_password/presentation/pages/forgot_password_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -33,7 +34,7 @@ class _LoginPageView extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.height * 0.22,
                 decoration: const BoxDecoration(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 25, 84, 244),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
@@ -122,159 +123,320 @@ class _LoginPageView extends StatelessWidget {
                     // Login form
                     Consumer<LoginController>(
                       builder: (context, controller, child) {
-                        return Column(
+                        return Stack(
                           children: [
-                            // Email field
-                            _buildInputField(
-                              controller: controller.emailController,
-                              hintText: 'Email',
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            const SizedBox(height: 30),
-
-                            // Password field
-                            _buildPasswordField(controller),
-                            const SizedBox(height: 50),
-
-                            // Keep logged in and Forgot password
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Column(
                               children: [
+                                // Email field
+                                _buildInputField(
+                                  controller: controller.emailController,
+                                  hintText: 'Email',
+                                  keyboardType: TextInputType.emailAddress,
+                                  isLoading: controller.isLoading,
+                                ),
+                                const SizedBox(height: 30),
+
+                                // Password field
+                                _buildPasswordField(controller),
+                                const SizedBox(height: 50),
+
+                                // Keep logged in and Forgot password
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    GestureDetector(
-                                      onTap: controller.toggleKeepLoggedIn,
-                                      child: Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                          color:
-                                              controller.keepLoggedIn
-                                                  ? Colors.blue
-                                                  : Colors.transparent,
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                            width: 2,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            4,
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: controller.toggleKeepLoggedIn,
+                                          child: Container(
+                                            width: 20,
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  controller.keepLoggedIn
+                                                      ? Colors.blue
+                                                      : Colors.transparent,
+                                              border: Border.all(
+                                                color: Colors.blue,
+                                                width: 2,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                            ),
+                                            child:
+                                                controller.keepLoggedIn
+                                                    ? const Icon(
+                                                      Icons.check,
+                                                      color: Colors.white,
+                                                      size: 14,
+                                                    )
+                                                    : null,
                                           ),
                                         ),
-                                        child:
-                                            controller.keepLoggedIn
-                                                ? const Icon(
-                                                  Icons.check,
-                                                  color: Colors.white,
-                                                  size: 14,
-                                                )
-                                                : null,
-                                      ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          'Keep me logged in',
+                                          style: GoogleFonts.sora(
+                                            fontSize: 12,
+                                            color: const Color(0xFF2C3E50),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Keep me logged in',
-                                      style: GoogleFonts.sora(
-                                        fontSize: 12,
-                                        color: const Color(0xFF2C3E50),
-                                        fontWeight: FontWeight.w600,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (_) =>
+                                                    const ForgotPasswordPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Forgot password?',
+                                        style: GoogleFonts.sora(
+                                          fontSize: 12,
+                                          color: const Color(0xFF7F8C8D),
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    // TODO: Implement forgot password
-                                  },
-                                  child: Text(
-                                    'Forgot password?',
-                                    style: GoogleFonts.sora(
-                                      fontSize: 12,
-                                      color: const Color(0xFF7F8C8D),
-                                      fontWeight: FontWeight.w600,
+                                const SizedBox(height: 32),
+
+                                // Login button
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 55,
+                                  child: ElevatedButton(
+                                    onPressed:
+                                        controller.isLoading
+                                            ? null
+                                            : () async {
+                                              final response =
+                                                  await controller.login();
+                                              if (response != null &&
+                                                  response.success) {
+                                                if (context.mounted) {
+                                                  // Show success notification
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).showSnackBar(
+                                                    SnackBar(
+                                                      content: Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.check_circle,
+                                                            color: Colors.white,
+                                                            size: 20,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Text(
+                                                            response.message ??
+                                                                'Login successful!',
+                                                            style:
+                                                                const TextStyle(
+                                                                  color:
+                                                                      Colors
+                                                                          .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      backgroundColor:
+                                                          Colors.green,
+                                                      duration: const Duration(
+                                                        seconds: 2,
+                                                      ),
+                                                      behavior:
+                                                          SnackBarBehavior
+                                                              .floating,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              8,
+                                                            ),
+                                                      ),
+                                                    ),
+                                                  );
+
+                                                  Navigator.of(
+                                                    context,
+                                                  ).pushReplacement(
+                                                    MaterialPageRoute(
+                                                      builder:
+                                                          (_) =>
+                                                              const HomePage(),
+                                                    ),
+                                                  );
+                                                }
+                                              } else if (response != null &&
+                                                  !response.success) {
+                                                // Show error popup notification
+                                                if (context.mounted) {
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).showSnackBar(
+                                                    SnackBar(
+                                                      content: Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.error,
+                                                            color: Colors.white,
+                                                            size: 20,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              response.message ??
+                                                                  'Invalid credentials',
+                                                              style: const TextStyle(
+                                                                color:
+                                                                    Colors
+                                                                        .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                      duration: const Duration(
+                                                        seconds: 3,
+                                                      ),
+                                                      behavior:
+                                                          SnackBarBehavior
+                                                              .floating,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              8,
+                                                            ),
+                                                      ),
+                                                      action: SnackBarAction(
+                                                        label: 'Dismiss',
+                                                        textColor: Colors.white,
+                                                        onPressed: () {
+                                                          ScaffoldMessenger.of(
+                                                            context,
+                                                          ).hideCurrentSnackBar();
+                                                        },
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              }
+                                            },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color.fromARGB(
+                                        255,
+                                        25,
+                                        84,
+                                        244,
+                                      ),
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      elevation: 0,
                                     ),
+                                    child:
+                                        controller.isLoading
+                                            ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const SizedBox(
+                                                  width: 20,
+                                                  height: 20,
+                                                  child: CircularProgressIndicator(
+                                                    strokeWidth: 2.5,
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                          Color
+                                                        >(Colors.white),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Text(
+                                                  'Logging in...',
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.white
+                                                        .withOpacity(0.9),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                            : const Text(
+                                              'Login',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 32),
-
-                            // Error message
-                            if (controller.errorMessage != null)
+                            // Loading overlay
+                            if (controller.isLoading)
                               Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(12),
-                                margin: const EdgeInsets.only(bottom: 16),
                                 decoration: BoxDecoration(
-                                  color: Colors.red.shade50,
-                                  border: Border.all(
-                                    color: Colors.red.shade200,
-                                  ),
+                                  color: Colors.black.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Text(
-                                  controller.errorMessage!,
-                                  style: TextStyle(
-                                    color: Colors.red.shade700,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-
-                            // Login button
-                            SizedBox(
-                              width: double.infinity,
-                              height: 55,
-                              child: ElevatedButton(
-                                onPressed:
-                                    controller.isLoading
-                                        ? null
-                                        : () async {
-                                          final response =
-                                              await controller.login();
-                                          if (response != null &&
-                                              response.success) {
-                                            if (context.mounted) {
-                                              Navigator.of(
-                                                context,
-                                              ).pushReplacement(
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (_) => const HomePage(),
-                                                ),
-                                              );
-                                            }
-                                          }
-                                        },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue,
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  elevation: 0,
-                                ),
-                                child:
-                                    controller.isLoading
-                                        ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
+                                child: const Center(
+                                  child: Card(
+                                    elevation: 8,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(24.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          CircularProgressIndicator(
+                                            strokeWidth: 3,
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
-                                                  Colors.white,
+                                                  Colors.blue,
                                                 ),
                                           ),
-                                        )
-                                        : const Text(
-                                          'Login',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
+                                          SizedBox(height: 16),
+                                          Text(
+                                            'Please wait...',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xFF2C3E50),
+                                            ),
                                           ),
-                                        ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
                           ],
                         );
                       },
@@ -293,20 +455,32 @@ class _LoginPageView extends StatelessWidget {
     required TextEditingController controller,
     required String hintText,
     TextInputType? keyboardType,
+    bool isLoading = false,
   }) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isLoading ? Colors.grey.shade100 : Colors.white,
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: const Color(0xFF7E81BD), width: 1),
+        border: Border.all(
+          color: isLoading ? Colors.grey.shade300 : const Color(0xFF7E81BD),
+          width: 1,
+        ),
       ),
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
-        style: const TextStyle(fontSize: 16, color: Color(0xFF2C3E50)),
+        enabled: !isLoading,
+        style: TextStyle(
+          fontSize: 16,
+          color: isLoading ? Colors.grey.shade600 : const Color(0xFF2C3E50),
+        ),
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(color: Color(0xFF95A5A6), fontSize: 16),
+          hintStyle: TextStyle(
+            color: isLoading ? Colors.grey.shade400 : const Color(0xFF95A5A6),
+            fontSize: 16,
+          ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
@@ -318,31 +492,57 @@ class _LoginPageView extends StatelessWidget {
   }
 
   Widget _buildPasswordField(LoginController controller) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: controller.isLoading ? Colors.grey.shade100 : Colors.white,
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: const Color(0xFF7E81BD), width: 1),
+        border: Border.all(
+          color:
+              controller.isLoading
+                  ? Colors.grey.shade300
+                  : const Color(0xFF7E81BD),
+          width: 1,
+        ),
       ),
       child: TextField(
         controller: controller.passwordController,
         obscureText: !controller.isPasswordVisible,
-        style: const TextStyle(fontSize: 16, color: Color(0xFF2C3E50)),
+        enabled: !controller.isLoading,
+        style: TextStyle(
+          fontSize: 16,
+          color:
+              controller.isLoading
+                  ? Colors.grey.shade600
+                  : const Color(0xFF2C3E50),
+        ),
         decoration: InputDecoration(
           hintText: 'Password',
-          hintStyle: const TextStyle(color: Color(0xFF95A5A6), fontSize: 16),
+          hintStyle: TextStyle(
+            color:
+                controller.isLoading
+                    ? Colors.grey.shade400
+                    : const Color(0xFF95A5A6),
+            fontSize: 16,
+          ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 20,
           ),
           suffixIcon: GestureDetector(
-            onTap: controller.togglePasswordVisibility,
+            onTap:
+                controller.isLoading
+                    ? null
+                    : controller.togglePasswordVisibility,
             child: Icon(
               controller.isPasswordVisible
                   ? Icons.visibility_off
                   : Icons.visibility,
-              color: const Color(0xFF95A5A6),
+              color:
+                  controller.isLoading
+                      ? Colors.grey.shade400
+                      : const Color(0xFF95A5A6),
               size: 20,
             ),
           ),

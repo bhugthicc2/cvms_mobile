@@ -27,9 +27,10 @@ class LoginController extends ChangeNotifier {
 
   Future<LoginResponse?> login() async {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      errorMessage = 'Please fill in all fields';
-      notifyListeners();
-      return null;
+      return LoginResponse(
+        success: false,
+        message: 'Please fill in all fields',
+      );
     }
 
     isLoading = true;
@@ -48,17 +49,14 @@ class LoginController extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
 
-      if (!response.success) {
-        errorMessage = response.message ?? 'Invalid credentials';
-        notifyListeners();
-      }
-
       return response;
     } catch (e) {
       isLoading = false;
-      errorMessage = 'Login failed. Please try again.';
       notifyListeners();
-      return null;
+      return LoginResponse(
+        success: false,
+        message: 'Login failed. Please try again.',
+      );
     }
   }
 
