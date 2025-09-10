@@ -130,12 +130,13 @@ class CustomDrawer extends StatelessWidget {
           // Menu items section
           Expanded(
             child: Container(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Column(
                 children: [
                   const SizedBox(height: 20),
                   // Profile menu item
                   _buildMenuItem(
+                    context,
                     icon: Icons.person_outline,
                     title: 'Profile',
                     onTap: onProfileTap,
@@ -147,6 +148,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   // About menu item
                   _buildMenuItem(
+                    context,
                     icon: Icons.info_outline,
                     title: 'About',
                     onTap: onAboutTap,
@@ -158,6 +160,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   // Settings menu item
                   _buildMenuItem(
+                    context,
                     icon: Icons.settings_outlined,
                     title: 'Settings',
                     onTap: onSettingsTap,
@@ -169,6 +172,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   // Logout menu item
                   _buildMenuItem(
+                    context,
                     icon: Icons.logout,
                     title: 'Logout',
                     onTap: onLogoutTap,
@@ -188,18 +192,22 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem({
+  Widget _buildMenuItem(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required VoidCallback onTap,
     bool isLogout = false,
   }) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: ListTile(
         leading: Icon(
           icon,
-          color: isLogout ? Colors.red : Colors.black87,
+          color:
+              isLogout
+                  ? Colors.red
+                  : Theme.of(context).textTheme.bodyLarge?.color,
           size: 24,
         ),
         title: Text(
@@ -207,13 +215,21 @@ class CustomDrawer extends StatelessWidget {
           style: GoogleFonts.sora(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: isLogout ? Colors.red : Colors.black87,
+            color:
+                isLogout
+                    ? Colors.red
+                    : Theme.of(context).textTheme.bodyLarge?.color,
             letterSpacing: 0.1,
           ),
         ),
         trailing: Icon(
           Icons.arrow_forward_ios,
-          color: isLogout ? Colors.red : Colors.grey.shade600,
+          color:
+              isLogout
+                  ? Colors.red
+                  : (Theme.of(context).brightness == Brightness.dark
+                      ? Colors.grey.shade400
+                      : Colors.grey.shade600),
           size: 16,
         ),
         onTap: onTap,

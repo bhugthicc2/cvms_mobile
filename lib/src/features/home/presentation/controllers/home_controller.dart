@@ -94,23 +94,24 @@ class HomeController extends ChangeNotifier {
   }
 
   void _handleEntranceScan() {
-    // TODO: Implement entrance scan functionality
-    print('Entrance scan tapped');
+    Navigator.of(_currentContext!).pushNamed('/scan-entrance');
   }
 
   void _handleExitScan() {
-    // TODO: Implement exit scan functionality
-    print('Exit scan tapped');
+    Navigator.of(_currentContext!).pushNamed('/scan-exit');
   }
 
   void _handleVehicleScan() {
-    // TODO: Implement vehicle scan functionality
-    print('Vehicle scan tapped');
+    Navigator.of(_currentContext!).pushNamed('/scan-vehicle');
   }
 
   void _handleRecentActivity() {
-    // TODO: Implement recent activity functionality
-    print('Recent activity tapped');
+    Navigator.of(_currentContext!).pushNamed('/recent-activity');
+  }
+
+  BuildContext? _currentContext;
+  void attachContext(BuildContext context) {
+    _currentContext = context;
   }
 
   Future<void> logout() async {

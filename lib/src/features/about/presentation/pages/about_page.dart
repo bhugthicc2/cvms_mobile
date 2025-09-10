@@ -7,9 +7,11 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 25, 84, 244), // Blue header
+        backgroundColor:
+            Theme.of(context).appBarTheme.backgroundColor ??
+            Theme.of(context).colorScheme.primary,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
@@ -26,7 +28,8 @@ class AboutPage extends StatelessWidget {
         title: Text(
           'About',
           style: GoogleFonts.sora(
-            color: Colors.white,
+            color:
+                Theme.of(context).appBarTheme.foregroundColor ?? Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -45,12 +48,16 @@ class AboutPage extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Color.fromARGB(255, 25, 84, 244), // Dark blue border
+                  color: Theme.of(context).colorScheme.primary,
                   width: 3,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(
+                      Theme.of(context).brightness == Brightness.dark
+                          ? 0.3
+                          : 0.1,
+                    ),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -64,8 +71,8 @@ class AboutPage extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 25, 84, 244),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -86,7 +93,7 @@ class AboutPage extends StatelessWidget {
               style: GoogleFonts.sora(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             const SizedBox(height: 8),
@@ -97,7 +104,10 @@ class AboutPage extends StatelessWidget {
               style: GoogleFonts.sora(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Colors.grey[600],
+                color:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[400]
+                        : Colors.grey[600],
               ),
             ),
             const SizedBox(height: 4),
@@ -108,13 +118,17 @@ class AboutPage extends StatelessWidget {
               style: GoogleFonts.sora(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Colors.grey[600],
+                color:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[400]
+                        : Colors.grey[600],
               ),
             ),
             const SizedBox(height: 40),
 
             // About this app section
             _buildSection(
+              context,
               title: 'About this app',
               content:
                   'The Cloud-Based Vehicle Monitoring System (CVMS) is designed to provide a secure and efficient way of managing vehicle entries and exits within the JRMSU Katipunan Campus.',
@@ -123,6 +137,7 @@ class AboutPage extends StatelessWidget {
 
             // Goal section
             _buildSection(
+              context,
               title: 'Goal',
               content:
                   'To digitalize the monitoring process of vehicles for improved security, transparency, and record-keeping.',
@@ -130,7 +145,7 @@ class AboutPage extends StatelessWidget {
             const SizedBox(height: 32),
 
             // Developers section
-            _buildDevelopersSection(),
+            _buildDevelopersSection(context),
             const SizedBox(height: 40),
           ],
         ),
@@ -138,7 +153,11 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSection({required String title, required String content}) {
+  Widget _buildSection(
+    BuildContext context, {
+    required String title,
+    required String content,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -147,7 +166,7 @@ class AboutPage extends StatelessWidget {
           style: GoogleFonts.sora(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
         const SizedBox(height: 12),
@@ -156,7 +175,10 @@ class AboutPage extends StatelessWidget {
           style: GoogleFonts.sora(
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: Colors.grey[600],
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey[400]
+                    : Colors.grey[600],
             height: 1.5,
           ),
         ),
@@ -164,7 +186,7 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDevelopersSection() {
+  Widget _buildDevelopersSection(BuildContext context) {
     final developers = [
       'Jesle Peras Gapol',
       'Jessa Onongan Pagat',
@@ -180,7 +202,7 @@ class AboutPage extends StatelessWidget {
           style: GoogleFonts.sora(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
         const SizedBox(height: 12),
@@ -193,8 +215,8 @@ class AboutPage extends StatelessWidget {
                     Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF1E3A8A),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -205,7 +227,10 @@ class AboutPage extends StatelessWidget {
                         style: GoogleFonts.sora(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: Colors.grey[600],
+                          color:
+                              Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.grey[400]
+                                  : Colors.grey[600],
                           height: 1.5,
                         ),
                       ),

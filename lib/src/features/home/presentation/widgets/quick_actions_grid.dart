@@ -49,7 +49,11 @@ class QuickActionsGrid extends StatelessWidget {
       onTap: action.onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: action.color,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [action.color.withOpacity(0.9), action.color],
+          ),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -62,18 +66,36 @@ class QuickActionsGrid extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(action.icon, color: Colors.white, size: 32),
-              const SizedBox(height: 12),
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Center(
+                  child:
+                      action.iconAsset != null
+                          ? Image.asset(
+                            action.iconAsset!,
+                            width: 24,
+                            height: 24,
+                            color: Colors.white,
+                          )
+                          : Icon(action.icon, color: Colors.white, size: 28),
+                ),
+              ),
+              const Spacer(),
               Text(
                 action.title,
                 style: GoogleFonts.sora(
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
               const SizedBox(height: 4),
               Text(
@@ -83,7 +105,7 @@ class QuickActionsGrid extends StatelessWidget {
                   color: Colors.white70,
                   fontWeight: FontWeight.w400,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
             ],
           ),

@@ -7,9 +7,13 @@ import 'package:cvms_mobile/src/features/home/data/repositories/home_repository.
 import 'package:cvms_mobile/src/features/home/domain/usecases/get_user_usecase.dart';
 import 'package:cvms_mobile/src/features/home/domain/usecases/get_statistics_usecase.dart';
 import 'package:cvms_mobile/src/features/home/domain/usecases/logout_usecase.dart';
+import 'package:cvms_mobile/src/core/controllers/font_controller.dart';
+import 'package:cvms_mobile/src/core/controllers/theme_controller.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({super.key, this.initialIsDarkMode = false});
+
+  final bool initialIsDarkMode;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +27,45 @@ class App extends StatelessWidget {
                 LogoutUseCase(HomeRepositoryImpl()),
               ),
         ),
+        ChangeNotifierProvider(
+          create: (_) {
+            final controller = FontController();
+            controller.load();
+            return controller;
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ThemeController(initialIsDarkMode: initialIsDarkMode),
+        ),
       ],
-      child: MaterialApp(
-        title: 'CVMS',
-        theme: AppTheme.lightTheme,
-        onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: AppRouter.splash,
-        debugShowCheckedModeBanner: false,
+      child: Consumer2<FontController, ThemeController>(
+        builder:
+            (context, fontController, themeController, _) => MaterialApp(
+              title: 'CVMS',
+              theme: AppTheme.lightTheme(
+                textScaleFactor: fontController.textScaleFactor,
+              ),
+              darkTheme: AppTheme.darkTheme(
+                textScaleFactor: fontController.textScaleFactor,
+              ),
+              themeMode:
+                  themeController.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+              onGenerateRoute: AppRouter.onGenerateRoute,
+              initialRoute: AppRouter.splash,
+              debugShowCheckedModeBanner: false,
+              builder: (context, child) {
+                // Also apply MediaQuery textScaleFactor so Text widgets scale
+                final media = MediaQuery.of(context);
+                return MediaQuery(
+                  data: media.copyWith(
+                    textScaler: TextScaler.linear(
+                      fontController.textScaleFactor,
+                    ),
+                  ),
+                  child: child!,
+                );
+              },
+            ),
       ),
     );
   }

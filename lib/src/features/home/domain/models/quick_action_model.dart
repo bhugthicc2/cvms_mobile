@@ -7,6 +7,8 @@ class QuickActionModel {
   final IconData icon;
   final Color color;
   final VoidCallback onTap;
+  // Optional asset-based icon for custom logos
+  final String? iconAsset;
 
   const QuickActionModel({
     required this.id,
@@ -15,5 +17,6 @@ class QuickActionModel {
     required this.icon,
     required this.color,
     required this.onTap,
+    this.iconAsset,
   });
 }

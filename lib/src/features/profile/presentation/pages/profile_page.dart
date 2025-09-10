@@ -12,11 +12,17 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA), // Light background
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Consumer<HomeController>(
         builder: (context, controller, child) {
           if (controller.user == null) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            );
           }
 
           return Column(
@@ -25,9 +31,11 @@ class ProfilePage extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.height * 0.4,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 25, 84, 244), // Blue background
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color:
+                      Theme.of(context).appBarTheme.backgroundColor ??
+                      Theme.of(context).colorScheme.primary,
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),
                   ),
@@ -49,18 +57,27 @@ class ProfilePage extends StatelessWidget {
                                 color: Colors.white,
                                 size: 20,
                               ),
-                              onPressed:
-                                  () => Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    '/home',
-                                    (route) => false,
-                                  ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Future.delayed(
+                                  const Duration(milliseconds: 100),
+                                  () {
+                                    if (context.mounted) {
+                                      Scaffold.of(context).openDrawer();
+                                    }
+                                  },
+                                );
+                              },
                             ),
                             Expanded(
                               child: Text(
                                 'Profile',
                                 style: GoogleFonts.sora(
-                                  color: Colors.white,
+                                  color:
+                                      Theme.of(
+                                        context,
+                                      ).appBarTheme.foregroundColor ??
+                                      Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -106,8 +123,11 @@ class ProfilePage extends StatelessWidget {
                                           stackTrace,
                                         ) {
                                           return Container(
-                                            decoration: const BoxDecoration(
-                                              color: Color(0xFF1E3A8A),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
                                               shape: BoxShape.circle,
                                             ),
                                             child: const Icon(
@@ -119,8 +139,11 @@ class ProfilePage extends StatelessWidget {
                                         },
                                       )
                                       : Container(
-                                        decoration: const BoxDecoration(
-                                          color: Color(0xFF1E3A8A),
+                                        decoration: BoxDecoration(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).colorScheme.primary,
                                           shape: BoxShape.circle,
                                         ),
                                         child: const Icon(
@@ -138,10 +161,10 @@ class ProfilePage extends StatelessWidget {
                             child: Container(
                               width: 36,
                               height: 36,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).cardColor,
                                 shape: BoxShape.circle,
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Colors.black26,
                                     blurRadius: 4,
@@ -149,9 +172,9 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.camera_alt,
-                                color: Color(0xFF1E3A8A),
+                                color: Theme.of(context).colorScheme.primary,
                                 size: 18,
                               ),
                             ),
@@ -176,11 +199,16 @@ class ProfilePage extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.08),
+                                color: Colors.black.withOpacity(
+                                  Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? 0.3
+                                      : 0.08,
+                                ),
                                 blurRadius: 16,
                                 offset: const Offset(0, 4),
                               ),
@@ -191,6 +219,7 @@ class ProfilePage extends StatelessWidget {
                             children: [
                               // Fullname field
                               _buildInfoField(
+                                context,
                                 label: 'Fullname',
                                 value: controller.user!.fullName,
                               ),
@@ -198,6 +227,7 @@ class ProfilePage extends StatelessWidget {
 
                               // Email field
                               _buildInfoField(
+                                context,
                                 label: 'Email',
                                 value: controller.user!.email,
                               ),
@@ -216,8 +246,10 @@ class ProfilePage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () => _handleLogout(context),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.error,
+                            foregroundColor:
+                                Theme.of(context).colorScheme.onError,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -243,7 +275,11 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoField({required String label, required String value}) {
+  Widget _buildInfoField(
+    BuildContext context, {
+    required String label,
+    required String value,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -252,7 +288,10 @@ class ProfilePage extends StatelessWidget {
           style: GoogleFonts.sora(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: Colors.grey[700],
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey[300]
+                    : Colors.grey[700],
           ),
         ),
         const SizedBox(height: 8),
@@ -260,12 +299,20 @@ class ProfilePage extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey[300]!),
+            border: Border.all(
+              color:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Colors.grey[700]!
+                      : Colors.grey[300]!,
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
+                color: (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.black
+                        : Colors.grey)
+                    .withOpacity(0.1),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
               ),
@@ -276,7 +323,7 @@ class ProfilePage extends StatelessWidget {
             style: GoogleFonts.sora(
               fontSize: 16,
               fontWeight: FontWeight.w400,
-              color: Colors.black87,
+              color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
           ),
         ),
@@ -286,9 +333,9 @@ class ProfilePage extends StatelessWidget {
 
   Widget _buildLogoutBottomSheet(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
@@ -308,7 +355,10 @@ class ProfilePage extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[700]
+                        : Colors.grey[300],
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -320,13 +370,13 @@ class ProfilePage extends StatelessWidget {
                 Container(
                   width: 24,
                   height: 24,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.error,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.warning,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onError,
                     size: 16,
                   ),
                 ),
@@ -336,7 +386,7 @@ class ProfilePage extends StatelessWidget {
                   style: GoogleFonts.sora(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
               ],
@@ -349,7 +399,10 @@ class ProfilePage extends StatelessWidget {
               style: GoogleFonts.sora(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Colors.grey[600],
+                color:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[400]
+                        : Colors.grey[600],
                 height: 1.4,
               ),
             ),
@@ -363,9 +416,14 @@ class ProfilePage extends StatelessWidget {
                   child: Container(
                     height: 48,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey[300]!),
+                      border: Border.all(
+                        color:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[700]!
+                                : Colors.grey[300]!,
+                      ),
                     ),
                     child: TextButton(
                       onPressed: () => Navigator.pop(context, false),
@@ -379,7 +437,10 @@ class ProfilePage extends StatelessWidget {
                         style: GoogleFonts.sora(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.grey[700],
+                          color:
+                              Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.grey[300]
+                                  : Colors.grey[700],
                         ),
                       ),
                     ),
@@ -392,7 +453,7 @@ class ProfilePage extends StatelessWidget {
                   child: Container(
                     height: 48,
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Theme.of(context).colorScheme.error,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: TextButton(
@@ -407,7 +468,7 @@ class ProfilePage extends StatelessWidget {
                         style: GoogleFonts.sora(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onError,
                         ),
                       ),
                     ),

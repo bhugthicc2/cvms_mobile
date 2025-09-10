@@ -52,24 +52,29 @@ class HomeHeader extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: onProfileTap,
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.white,
-                      child:
-                          user.profileImage != null
-                              ? ClipOval(
-                                child: Image.network(
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 3),
+                      ),
+                      child: ClipOval(
+                        child:
+                            user.profileImage != null
+                                ? Image.network(
                                   user.profileImage!,
-                                  width: 40,
-                                  height: 40,
+                                  width: 44,
+                                  height: 44,
+                                  fit: BoxFit.cover,
+                                )
+                                : Image.asset(
+                                  'assets/images/Ellipse 1.png',
+                                  width: 44,
+                                  height: 44,
                                   fit: BoxFit.cover,
                                 ),
-                              )
-                              : const Icon(
-                                Icons.person,
-                                color: Color(0xFF3498DB),
-                                size: 24,
-                              ),
+                      ),
                     ),
                   ),
                 ],

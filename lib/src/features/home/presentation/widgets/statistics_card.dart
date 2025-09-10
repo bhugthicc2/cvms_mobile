@@ -13,11 +13,14 @@ class StatisticsCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        // Use themed card color so it adapts to dark mode
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(
+              Theme.of(context).brightness == Brightness.dark ? 0.3 : 0.1,
+            ),
             blurRadius: 15,
             offset: const Offset(0, 5),
             spreadRadius: 0,
@@ -35,6 +38,7 @@ class StatisticsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildLegendItem(
+                      context,
                       'Entered',
                       statistics.entered,
                       statistics.enteredPercentage,
@@ -42,6 +46,7 @@ class StatisticsCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     _buildLegendItem(
+                      context,
                       'Exited',
                       statistics.exited,
                       statistics.exitedPercentage,
@@ -49,6 +54,7 @@ class StatisticsCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     _buildLegendItem(
+                      context,
                       'Others',
                       statistics.others,
                       statistics.othersPercentage,
@@ -68,6 +74,7 @@ class StatisticsCard extends StatelessWidget {
   }
 
   Widget _buildLegendItem(
+    BuildContext context,
     String label,
     int count,
     double percentage,
@@ -89,7 +96,7 @@ class StatisticsCard extends StatelessWidget {
                 label,
                 style: GoogleFonts.sora(
                   fontSize: 14,
-                  color: const Color(0xFF2C3E50),
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -99,7 +106,7 @@ class StatisticsCard extends StatelessWidget {
                     '$count',
                     style: GoogleFonts.sora(
                       fontSize: 16,
-                      color: const Color(0xFF2C3E50),
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -108,7 +115,10 @@ class StatisticsCard extends StatelessWidget {
                     '${percentage.toStringAsFixed(0)}%',
                     style: GoogleFonts.sora(
                       fontSize: 14,
-                      color: const Color(0xFF7F8C8D),
+                      color:
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Colors.grey[400]
+                              : Colors.grey[600],
                       fontWeight: FontWeight.w500,
                     ),
                   ),

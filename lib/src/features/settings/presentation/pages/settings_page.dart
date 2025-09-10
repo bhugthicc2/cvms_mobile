@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:cvms_mobile/src/core/controllers/font_controller.dart';
+import 'package:cvms_mobile/src/core/controllers/theme_controller.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -9,29 +12,27 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _darkMode = false;
   bool _sampleDisplay = false;
   bool _sampleSecurity = false;
   bool _backup = false;
-  String _fontSize = '12pt';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(
-        0xFFFEFEFE,
-      ), // Light background with subtle pink tint
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1E3A8A), // Blue header
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
-          onPressed:
-              () => Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/home',
-                (route) => false,
-              ),
+          onPressed: () {
+            Navigator.pop(context);
+            Future.delayed(const Duration(milliseconds: 100), () {
+              if (context.mounted) {
+                Scaffold.of(context).openDrawer();
+              }
+            });
+          },
         ),
         title: Text(
           'Settings',
@@ -59,7 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
               title: 'Font Size',
               subtitle: 'Adjust apps font size',
               trailing: Text(
-                _fontSize,
+                context.watch<FontController>().currentLabel,
                 style: GoogleFonts.sora(fontSize: 14, color: Colors.grey[600]),
               ),
               onTap: () => _showFontSizeDialog(),
@@ -70,11 +71,9 @@ class _SettingsPageState extends State<SettingsPage> {
               title: 'Dark mode',
               subtitle: 'Switch to dark mode',
               trailing: Switch(
-                value: _darkMode,
+                value: context.watch<ThemeController>().isDarkMode,
                 onChanged: (value) {
-                  setState(() {
-                    _darkMode = value;
-                  });
+                  context.read<ThemeController>().setDarkMode(value);
                 },
                 activeColor: const Color(0xFF1E3A8A),
               ),
@@ -164,7 +163,7 @@ class _SettingsPageState extends State<SettingsPage> {
       style: GoogleFonts.sora(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: Colors.black,
+        color: Theme.of(context).textTheme.bodyLarge?.color,
       ),
     );
   }
@@ -179,11 +178,13 @@ class _SettingsPageState extends State<SettingsPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(
+              Theme.of(context).brightness == Brightness.dark ? 0.2 : 0.05,
+            ),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -195,17 +196,27 @@ class _SettingsPageState extends State<SettingsPage> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: Colors.grey[100],
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xFF1E1E1E)
+                    : Colors.grey[100],
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, color: Colors.grey[700], size: 20),
+          child: Icon(
+            icon,
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey[300]
+                    : Colors.grey[700],
+            size: 20,
+          ),
         ),
         title: Text(
           title,
           style: GoogleFonts.sora(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: Colors.black,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
           ),
         ),
         subtitle: Text(
@@ -213,7 +224,10 @@ class _SettingsPageState extends State<SettingsPage> {
           style: GoogleFonts.sora(
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            color: Colors.grey[600],
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey[400]
+                    : Colors.grey[600],
           ),
         ),
         trailing: trailing,
@@ -226,7 +240,7 @@ class _SettingsPageState extends State<SettingsPage> {
     showDialog(
       context: context,
       builder:
-          (context) => AlertDialog(
+          (dialogContext) => AlertDialog(
             title: Text(
               'Font Size',
               style: GoogleFonts.sora(fontWeight: FontWeight.bold),
@@ -243,12 +257,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   (size) => RadioListTile<String>(
                     title: Text(size, style: GoogleFonts.sora()),
                     value: size,
-                    groupValue: _fontSize,
+                    groupValue:
+                        dialogContext.watch<FontController>().currentLabel,
                     onChanged: (value) {
-                      setState(() {
-                        _fontSize = value!;
-                      });
-                      Navigator.pop(context);
+                      final selected = value!;
+                      dialogContext.read<FontController>().setByLabel(selected);
+                      Navigator.pop(dialogContext);
                     },
                   ),
                 ),
@@ -256,7 +270,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pop(dialogContext),
                 child: Text(
                   'Cancel',
                   style: GoogleFonts.sora(color: Colors.grey[600]),

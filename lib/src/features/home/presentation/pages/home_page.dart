@@ -38,8 +38,13 @@ class _HomePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Attach context for navigation from controller quick action handlers
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final controller = Provider.of<HomeController>(context, listen: false);
+      controller.attachContext(context);
+    });
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA), // Light background
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       drawer: Consumer<HomeController>(
         builder: (context, controller, child) {
           if (controller.user == null) {
@@ -57,9 +62,11 @@ class _HomePageView extends StatelessWidget {
       body: Consumer<HomeController>(
         builder: (context, controller, child) {
           if (controller.isLoading) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF3498DB)),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).colorScheme.primary,
+                ),
               ),
             );
           }
@@ -72,12 +79,15 @@ class _HomePageView extends StatelessWidget {
                   Icon(
                     Icons.error_outline,
                     size: 64,
-                    color: Colors.red.shade300,
+                    color: Theme.of(context).colorScheme.error,
                   ),
                   const SizedBox(height: 16),
                   Text(
                     controller.errorMessage!,
-                    style: const TextStyle(fontSize: 16, color: Colors.red),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
@@ -127,22 +137,34 @@ class _HomePageView extends StatelessWidget {
   }
 
   void _showAbout(BuildContext context) {
-    Navigator.pop(context); // Close drawer
+    final scaffoldState = Scaffold.maybeOf(context);
+    if (scaffoldState?.isDrawerOpen == true) {
+      Navigator.pop(context); // Close drawer if open
+    }
     Navigator.pushNamed(context, '/about');
   }
 
   void _showSettings(BuildContext context) {
-    Navigator.pop(context); // Close drawer
+    final scaffoldState = Scaffold.maybeOf(context);
+    if (scaffoldState?.isDrawerOpen == true) {
+      Navigator.pop(context); // Close drawer if open
+    }
     Navigator.pushNamed(context, '/settings');
   }
 
   void _showProfile(BuildContext context) {
-    Navigator.pop(context); // Close drawer
+    final scaffoldState = Scaffold.maybeOf(context);
+    if (scaffoldState?.isDrawerOpen == true) {
+      Navigator.pop(context); // Close drawer if open
+    }
     Navigator.pushNamed(context, '/profile');
   }
 
   void _handleLogout(BuildContext context) async {
-    Navigator.pop(context); // Close menu
+    final scaffoldState = Scaffold.maybeOf(context);
+    if (scaffoldState?.isDrawerOpen == true) {
+      Navigator.pop(context); // Close menu if open
+    }
 
     final controller = Provider.of<HomeController>(context, listen: false);
     await controller.logout();
