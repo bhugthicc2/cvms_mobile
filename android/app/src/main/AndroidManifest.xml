@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.jrmsukcdrrmsu.cvms_mobile">
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:label="cvms_mobile"
         android:name="${applicationName}"

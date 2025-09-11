@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cvms_mobile/app/app.dart';
+import 'package:cvms_mobile/core/app/app.dart';
 import 'package:cvms_mobile/firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,5 +18,11 @@ void main() async {
     // This allows the app to show appropriate error messages
   }
 
-  runApp(const App());
+  final prefs = await SharedPreferences.getInstance();
+  final initialIsDarkMode = prefs.getBool('isDarkMode') ?? false;
+
+  runApp(App(initialIsDarkMode: initialIsDarkMode));
 }
+
+
+// git checkout -b bading-feature
