@@ -15,7 +15,6 @@ import 'package:cvms_mobile/src/features/recent_activity/presentation/pages/rece
 class AppRouter {
   static const String splash = '/';
   static const String home = '/home';
-<<<<<<< Updated upstream
   static const String about = '/about';
   static const String settings = '/settings';
   static const String profile = '/profile';
@@ -25,9 +24,6 @@ class AppRouter {
   static const String scanExit = '/scan-exit';
   static const String scanVehicle = '/scan-vehicle';
   static const String recentActivity = '/recent-activity';
-=======
-  static const String signin = '/signin';
->>>>>>> Stashed changes
 
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -35,7 +31,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SplashPage());
       case home:
         return MaterialPageRoute(builder: (_) => const HomePage());
-<<<<<<< Updated upstream
       case about:
         return MaterialPageRoute(builder: (_) => const AboutPage());
       case settings:
@@ -54,10 +49,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ScanVehiclePage());
       case recentActivity:
         return MaterialPageRoute(builder: (_) => const RecentActivityPage());
-=======
-      case signin:
-        return MaterialPageRoute(builder: (_) => const LoginPage());
->>>>>>> Stashed changes
       default:
         return MaterialPageRoute(
           builder:
