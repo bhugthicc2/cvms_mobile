@@ -17,6 +17,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -67,6 +68,14 @@ class App extends StatelessWidget {
               },
             ),
       ),
+=======
+    return MaterialApp(
+      title: 'CVMS',
+      theme: AppTheme.lightTheme,
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: AppRouter.signin,
+      debugShowCheckedModeBanner: false,
+>>>>>>> Stashed changes
     );
   }
 }
