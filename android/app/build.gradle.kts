@@ -29,15 +29,14 @@ android {
     }
 
     buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("debug")
-            // minifyEnabled = true
-            // shrinkResources = true
-            // proguardFiles(
-            //     getDefaultProguardFile("proguard-android.txt"),
-            //     "proguard-rules.pro"
-            // )
-        }
+         release {
+        isMinifyEnabled = true
+        isShrinkResources = true
+        proguardFiles(
+            getDefaultProguardFile("proguard-android-optimize.txt"),
+            "proguard-rules.pro"
+        )
+    }
     }
 
     externalNativeBuild {
