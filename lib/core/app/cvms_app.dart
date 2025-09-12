@@ -1,5 +1,6 @@
+import 'package:cvms_mobile/core/routes/app_route_generator.dart';
+import 'package:cvms_mobile/core/routes/app_routes.dart';
 import 'package:cvms_mobile/core/theme/app_theme.dart';
-import 'package:cvms_mobile/features/auth/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 
 class CVMSApp extends StatelessWidget {
@@ -11,8 +12,9 @@ class CVMSApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      home: const SplashPage(),
+      themeMode: ThemeMode.light,
+      initialRoute: AppRoutes.splash,
+      onGenerateRoute: AppRouteGenerator.generateRoute,
     );
   }
 }
