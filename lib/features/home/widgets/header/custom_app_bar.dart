@@ -1,20 +1,19 @@
+import 'package:cvms_mobile/core/routes/app_routes.dart';
 import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+  final VoidCallback toggleSidebar;
+  const CustomAppBar({super.key, required this.toggleSidebar});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
-            //todo
-            debugPrint('Menu CLicked');
-          },
+          onTap: toggleSidebar,
           child: Icon(PhosphorIconsBold.list, color: AppColors.white),
         ),
         Spacer(),
@@ -30,15 +29,14 @@ class CustomAppBar extends StatelessWidget {
         Spacer(),
         GestureDetector(
           onTap: () {
-            //todo
-            debugPrint('Profile CLicked');
+            Navigator.pushNamed(context, AppRoutes.profile);
           },
           child: Container(
             height: 40,
             width: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(width: 3, color: AppColors.white),
+              border: Border.all(width: 2.5, color: AppColors.white),
             ),
             child: Container(
               decoration: BoxDecoration(

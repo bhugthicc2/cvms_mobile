@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback onSubmit;
   final String btnText;
+  final Color? btnColor;
   const CustomButton({
     super.key,
     required this.onSubmit,
     required this.btnText,
+    this.btnColor,
   });
 
   @override
@@ -18,7 +20,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onSubmit,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
+          backgroundColor: btnColor ?? AppColors.primary,
           elevation: 0,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),

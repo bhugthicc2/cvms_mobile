@@ -9,8 +9,15 @@ import 'package:cvms_mobile/features/auth/widgets/texts/custom_heading.dart';
 import 'package:cvms_mobile/features/auth/widgets/texts/custom_sub_heading.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _keepMeLoggedIn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +80,14 @@ class LoginPage extends StatelessWidget {
                   //keep me logged & forgot pass
                   Row(
                     children: [
-                      CustomCheckbox(value: true),
+                      CustomCheckbox(
+                        value: _keepMeLoggedIn,
+                        onChanged: (value) {
+                          setState(() {
+                            _keepMeLoggedIn = value ?? false;
+                          });
+                        },
+                      ),
                       AppSpacing.hXs,
                       Text(
                         'Keep me logged in',

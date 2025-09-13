@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 
 class CustomSubHeading extends StatelessWidget {
   final String subheading;
-  const CustomSubHeading({super.key, required this.subheading});
+  final double? subheadingFontSize;
+  const CustomSubHeading({
+    super.key,
+    required this.subheading,
+    this.subheadingFontSize,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class CustomSubHeading extends StatelessWidget {
       style: TextStyle(
         fontFamily: 'Sora',
         color: AppColors.white,
-        fontSize: AppFontSizes.labelSmall,
+        fontSize: subheadingFontSize ?? AppFontSizes.labelSmall,
         fontWeight: FontWeight.w500,
       ),
     );

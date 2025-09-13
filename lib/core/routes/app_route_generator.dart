@@ -1,7 +1,11 @@
+import 'package:cvms_mobile/features/activity/pages/recent_activity_page.dart';
 import 'package:cvms_mobile/features/auth/pages/email_sent_page.dart';
 import 'package:cvms_mobile/features/auth/pages/forgot_password_page.dart';
-import 'package:cvms_mobile/features/home/pages/entrance_scan_page.dart';
+import 'package:cvms_mobile/features/profile/pages/profile_page.dart';
+import 'package:cvms_mobile/features/qr_scanner/pages/entrance_scan_page.dart';
 import 'package:cvms_mobile/features/home/pages/home_page.dart';
+import 'package:cvms_mobile/features/qr_scanner/pages/exit_scan_page.dart';
+import 'package:cvms_mobile/features/qr_scanner/pages/vehicle_scan_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cvms_mobile/features/splash/pages/splash_page.dart';
 import 'package:cvms_mobile/features/auth/pages/login_page.dart';
@@ -22,6 +26,14 @@ class AppRouteGenerator {
         return MaterialPageRoute(builder: (_) => const EmailSentPage());
       case AppRoutes.entryScan:
         return MaterialPageRoute(builder: (_) => const EntranceScanPage());
+      case AppRoutes.exitScan:
+        return MaterialPageRoute(builder: (_) => const ExitScanPage());
+      case AppRoutes.vehicleScan:
+        return MaterialPageRoute(builder: (_) => const VehicleScanPage());
+      case AppRoutes.recentActivity:
+        return MaterialPageRoute(builder: (_) => const RecentActivityPage());
+      case AppRoutes.profile:
+        return MaterialPageRoute(builder: (_) => const ProfilePage());
 
       default:
         return _errorRoute();

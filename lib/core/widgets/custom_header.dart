@@ -4,13 +4,13 @@ class CustomHeader extends StatelessWidget {
   final double headerHeight;
   final Color backgroundColor;
   final EdgeInsetsGeometry padding;
-  final Widget child;
+  final Widget? child;
   const CustomHeader({
     super.key,
     required this.headerHeight,
     required this.backgroundColor,
     required this.padding,
-    required this.child,
+    this.child,
   });
 
   @override

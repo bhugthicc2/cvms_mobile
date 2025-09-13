@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class CustomHeading extends StatelessWidget {
   final String heading;
-  const CustomHeading({super.key, required this.heading});
+  final double? headingFontSize;
+  const CustomHeading({super.key, required this.heading, this.headingFontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class CustomHeading extends StatelessWidget {
       style: TextStyle(
         fontFamily: 'Sora',
         color: AppColors.primaryYellow,
-        fontSize: AppFontSizes.headlineMedium,
+        fontSize: headingFontSize ?? AppFontSizes.headlineMedium,
         fontWeight: FontWeight.bold,
       ),
     );

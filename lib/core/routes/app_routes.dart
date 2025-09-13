@@ -8,7 +8,10 @@ class AppRoutes {
   static const String home = '/home';
   static const String forgotPass = '/forgotPass';
   static const String emailSent = '/emailSent';
-  static const String vehicles = '/vehicles';
-  static const String entryScan = '/EntranceScanPage';
+  static const String entryScan = '/entranceScanPage';
+  static const String exitScan = '/exitScanPage';
+  static const String vehicleScan = '/vehicleScanPage';
+  static const String recentActivity = '/recentActivityPage';
+  static const String profile = '/profile';
   static const String settings = '/settings';
 }
