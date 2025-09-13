@@ -11,7 +11,7 @@ class VehicleScanPage extends StatelessWidget {
       instructionText:
           "Position the QR Code within the frame \n to scan for vehicle ID",
       onScan: (qrValue) {
-        debugPrint("✅ Entrance QR: $qrValue");
+        debugPrint("Entrance QR: $qrValue");
         // TODO: handle entrance logic (API call, navigate, etc.)
       },
     );
