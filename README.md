@@ -1,17 +1,17 @@
 ## 📱 Screenshots (Current Pages)
 
-| Page                   | Preview                                                                         |
-| ---------------------- | ------------------------------------------------------------------------------- |
-| Email Sent Page        | ![Splash Page](./app_progress_shots/splash_page.png)                            |
-| Forgot Password Page   | ![Login Page](./app_progress_shots/login_page.png)                              |
-| Home Page              | ![Forgot Password Page](./app_progress_shots/forgotpass_page.png)               |
-| Login Page             | ![Email Sent Page](./app_progress_shots/emailsent_page.png)                     |
-| Profile Page           | ![Home Page](./app_progress_shots/home_page.png)                                |
-| QR Scanner Initialized | ![Sidebar](./app_progress_shots/sidebar.png)                                    |
-| QR Scanner Loaded      | ![QR Scanner Page Initialized](./app_progress_shots/qr_scanner_initialized.png) |
-| Recent Activity Page   | ![QR Scanner Page Loaded](./app_progress_shots/qr_scanner_loaded.png)           |
-| Sidebar                | ![Profile Page](./app_progress_shots/profile_page.png)                          |
-| Splash Page            | ![Recent Activity Page](./app_progress_shots/recent_activity_page.png)          |
+| Page                        | Preview                                                                         |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| Splash Page                 | ![Splash Page](./app_progress_shots/splash_page.png)                            |
+| Login Page                  | ![Login Page](./app_progress_shots/login_page.png)                              |
+| Forgot Password Page        | ![Forgot Password Page](./app_progress_shots/forgotpass_page.png)               |
+| Eamil Sent Page             | ![Email Sent Page](./app_progress_shots/emailsent_page.png)                     |
+| Home Page                   | ![Home Page](./app_progress_shots/home_page.png)                                |
+| Sidebar                     | ![Sidebar](./app_progress_shots/sidebar.png)                                    |
+| QR Scanner Page Initialized | ![QR Scanner Page Initialized](./app_progress_shots/qr_scanner_initialized.png) |
+| QR Scanner Page Loaded      | ![QR Scanner Page Loaded](./app_progress_shots/qr_scanner_loaded.png)           |
+| Profile Page                | ![Profile Page](./app_progress_shots/profile_page.png)                          |
+| Recent Activity Page        | ![Recent Activity Page](./app_progress_shots/recent_activity_page.png)          |
 
 ---
 
