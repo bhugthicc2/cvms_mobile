@@ -1,3 +1,4 @@
+import 'package:cvms_mobile/core/widgets/custom_banner_toast.dart';
 import 'package:cvms_mobile/features/qr_scanner/widgets/scanner_page/qr_scanner_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,13 @@ class VehicleScanPage extends StatelessWidget {
       instructionText:
           "Position the QR Code within the frame \n to scan for vehicle ID",
       onScan: (qrValue) {
-        debugPrint("Entrance QR: $qrValue");
-        // todo handle vehicle scan logic
+        // todo handle info logic
+        // ex. Show a toast
+        BannerToast.show(
+          context,
+          message: 'QR Info Data: $qrValue',
+          type: BannerToastType.success,
+        );
       },
     );
   }

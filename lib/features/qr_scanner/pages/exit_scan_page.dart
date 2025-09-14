@@ -1,3 +1,4 @@
+import 'package:cvms_mobile/core/widgets/custom_banner_toast.dart';
 import 'package:cvms_mobile/features/qr_scanner/widgets/scanner_page/qr_scanner_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,13 @@ class ExitScanPage extends StatelessWidget {
       instructionText:
           "Position the QR Code within the frame \n to scan for exit",
       onScan: (qrValue) {
-        debugPrint("Entrance QR: $qrValue");
-        // todo handle exit scan logic
+        // todo handle exit logic
+        // ex. Show a toast
+        BannerToast.show(
+          context,
+          message: 'QR Exit Data: $qrValue',
+          type: BannerToastType.success,
+        );
       },
     );
   }

@@ -3,6 +3,7 @@ import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
 import 'package:cvms_mobile/core/widgets/custom_button.dart';
 import 'package:cvms_mobile/core/widgets/custom_header.dart';
+import 'package:cvms_mobile/core/widgets/custom_banner_toast.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_state.dart';
 import 'package:cvms_mobile/features/auth/widgets/dialogs/custom_logout_dialog.dart';
@@ -46,6 +47,11 @@ class _ProfilePageState extends State<ProfilePage> {
           onSubmit: () {
             Navigator.of(dialogContext).pop();
             _performLogout(context);
+            BannerToast.show(
+              context,
+              message: 'Logged out successfully',
+              type: BannerToastType.success,
+            );
           },
         );
       },

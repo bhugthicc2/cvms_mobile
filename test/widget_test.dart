@@ -1,22 +1,38 @@
-import 'package:cvms_mobile/core/app/cvms_app.dart';
+import 'package:cvms_mobile/core/widgets/custom_banner_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+// your helper
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const CVMSApp());
+  testWidgets('CustomSnackbar displays correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (context) {
+            return Scaffold(
+              body: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    BannerToast.show(
+                      context,
+                      message: 'Toast Test',
+                      type: BannerToastType.success,
+                    );
+                  },
+                  child: const Text('Show SnackBar'),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Tap the button to trigger the snackbar
+    await tester.tap(find.text('Show SnackBar'));
+    await tester.pump(); // start animation
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify SnackBar text appears
+    expect(find.text('Hello Test'), findsOneWidget);
   });
 }

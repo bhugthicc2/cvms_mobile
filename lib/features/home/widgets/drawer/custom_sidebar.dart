@@ -1,5 +1,6 @@
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
 import 'package:cvms_mobile/core/theme/app_strings.dart';
+import 'package:cvms_mobile/core/widgets/custom_banner_toast.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
 import 'package:cvms_mobile/features/auth/widgets/dialogs/custom_logout_dialog.dart';
 import 'package:cvms_mobile/features/home/widgets/drawer/custom_divider.dart';
@@ -26,6 +27,11 @@ class CustomDrawer extends StatelessWidget {
           onSubmit: () {
             Navigator.of(dialogContext).pop();
             _performLogout(context);
+            BannerToast.show(
+              context,
+              message: 'Logged out successfully',
+              type: BannerToastType.success,
+            );
           },
         );
       },

@@ -5,6 +5,7 @@ import 'package:cvms_mobile/core/theme/app_spacing.dart';
 import 'package:cvms_mobile/core/theme/app_strings.dart';
 import 'package:cvms_mobile/core/widgets/custom_button.dart';
 import 'package:cvms_mobile/core/widgets/custom_checkbox.dart';
+import 'package:cvms_mobile/core/widgets/custom_banner_toast.dart';
 import 'package:cvms_mobile/core/widgets/custom_text_field.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_state.dart';
@@ -12,6 +13,7 @@ import 'package:cvms_mobile/features/auth/widgets/texts/custom_heading.dart';
 import 'package:cvms_mobile/features/auth/widgets/texts/custom_sub_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,17 +38,19 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthAuthenticated) {
-            //todo
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Welcome ${state.user.fullname}")),
-            );
             Navigator.pushReplacementNamed(context, AppRoutes.home);
+            BannerToast.show(
+              context,
+              message: "Welcome, ${state.user.fullname}",
+              type: BannerToastType.success,
+            );
           }
           if (state is AuthError) {
-            //todo
-            ScaffoldMessenger.of(
+            BannerToast.show(
               context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+              message: state.message,
+              type: BannerToastType.error,
+            );
           }
         },
         builder: (context, state) {

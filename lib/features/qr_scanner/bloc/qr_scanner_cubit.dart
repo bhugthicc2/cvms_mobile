@@ -50,14 +50,14 @@ class QrScannerCubit extends Cubit<QrScannerState> {
   Color _determineFrameColor(String qrValue) {
     // Check if QR is valid format (not empty, not "Unknown QR")
     if (qrValue.isEmpty || qrValue == "Unknown QR") {
-      return AppColors.error; // Red for invalid QR
+      return AppColors.error;
     }
 
     // Check if data matches expected format (you can customize this logic)
     if (_isValidData(qrValue)) {
-      return AppColors.success; // Green for valid and matched data
+      return AppColors.success;
     } else {
-      return AppColors.warning; // Orange/Yellow for valid QR but unmatched data
+      return AppColors.warning;
     }
   }
 
@@ -70,7 +70,6 @@ class QrScannerCubit extends Cubit<QrScannerState> {
     // 5. Create a new log in vehicle_logs
     // 6. Update the vehicle status to "inside"
     // 7. Else → show error (like "Already inside" or "Invalid vehicle").
-    // 8. For now, simple example - you can replace with your logic
     return qrValue.length >= 3;
   }
 
