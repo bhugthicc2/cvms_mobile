@@ -7,12 +7,13 @@ class ExitScanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return QrScannerPage(
+      isExit: true,
       pageTitle: 'Scan Exit QR',
       instructionText:
           "Position the QR Code within the frame \n to scan for exit",
       onScan: (qrValue) {
-        debugPrint("✅ Entrance QR: $qrValue");
-        // TODO: handle entrance logic (API call, navigate, etc.)
+        debugPrint("Entrance QR: $qrValue");
+        // todo handle exit scan logic
       },
     );
   }

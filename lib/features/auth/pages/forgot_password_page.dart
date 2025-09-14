@@ -4,6 +4,10 @@ import 'package:cvms_mobile/core/theme/app_font_sizes.dart';
 import 'package:cvms_mobile/core/widgets/custom_button.dart';
 import 'package:cvms_mobile/core/widgets/custom_text_field.dart';
 import 'package:cvms_mobile/features/auth/widgets/appbar/custom_appbar.dart';
+import 'package:cvms_mobile/features/auth/widgets/buttons/custom_helper_link.dart';
+import 'package:cvms_mobile/features/auth/widgets/texts/custom_heading.dart';
+import 'package:cvms_mobile/features/auth/widgets/texts/custom_sub_heading.dart';
+import 'package:cvms_mobile/features/auth/widgets/visuals/custom_illustration.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_spacing.dart';
@@ -25,65 +29,34 @@ class ForgotPasswordPage extends StatelessWidget {
               AppSpacing.vXxl,
               Align(
                 alignment: Alignment.center,
-                child: Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                    fontFamily: 'Sora',
-                    fontSize: AppFontSizes.bodyLarge,
-                    color: AppColors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: CustomHeading(
+                  heading: 'Forgot Password?',
+                  fontSize: AppFontSizes.bodyLarge,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Align(
                 alignment: Alignment.center,
-                child: Text(
-                  textAlign: TextAlign.center,
-                  'Enter your registered email to receive\npassword reset link',
-                  style: TextStyle(
-                    fontFamily: 'Sora',
-                    fontSize: AppFontSizes.bodySmall,
-                    color: AppColors.grey400,
-                  ),
+                child: CustomSubHeading(
+                  subheading:
+                      'Enter your registered email to receive\npassword reset link',
+                  fontSize: AppFontSizes.bodySmall,
+                  fontColor: AppColors.grey400,
                 ),
               ),
               AppSpacing.vXxl,
-              Image.asset(
-                'assets/images/forgotpass_illustration.png',
-                fit: BoxFit.cover,
+              CustomIllustration(
+                image: 'assets/images/forgotpass_illustration.png',
               ),
               AppSpacing.vXxl,
               CustomTextField(labelText: 'Email'),
               AppSpacing.vSm,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    textAlign: TextAlign.center,
-                    'Remember password?',
-                    style: TextStyle(
-                      fontFamily: 'Sora',
-                      fontSize: AppFontSizes.bodySmall,
-                      color: AppColors.grey400,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //todo
-                      Navigator.pushNamed(context, AppRoutes.login);
-                    },
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      'Login',
-                      style: TextStyle(
-                        fontFamily: 'Sora',
-                        fontSize: AppFontSizes.bodySmall,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+              CustomHelperLink(
+                text: 'Remember password?',
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.login);
+                },
+                btnText: 'Login',
               ),
               AppSpacing.vSm,
               SizedBox(

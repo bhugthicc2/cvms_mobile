@@ -1,20 +1,30 @@
 import 'package:cvms_mobile/core/routes/app_route_generator.dart';
 import 'package:cvms_mobile/core/routes/app_routes.dart';
 import 'package:cvms_mobile/core/theme/app_theme.dart';
+import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
+import 'package:cvms_mobile/features/auth/data/auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CVMSApp extends StatelessWidget {
   const CVMSApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
-      initialRoute: AppRoutes.splash,
-      onGenerateRoute: AppRouteGenerator.generateRoute,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(AuthRepository()),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.light,
+        initialRoute: AppRoutes.splash,
+        onGenerateRoute: AppRouteGenerator.generateRoute,
+      ),
     );
   }
 }

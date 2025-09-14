@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 
 class CustomHeading extends StatelessWidget {
   final String heading;
-  const CustomHeading({super.key, required this.heading});
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  const CustomHeading({
+    super.key,
+    required this.heading,
+    this.fontSize,
+    this.fontWeight,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +20,8 @@ class CustomHeading extends StatelessWidget {
       textAlign: TextAlign.center,
       style: TextStyle(
         fontFamily: 'Sora',
-        fontWeight: FontWeight.w600,
-        fontSize: AppFontSizes.headlineSmall,
+        fontWeight: fontWeight ?? FontWeight.w600,
+        fontSize: fontSize ?? AppFontSizes.headlineSmall,
         color: AppColors.black,
       ),
     );

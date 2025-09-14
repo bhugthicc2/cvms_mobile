@@ -5,7 +5,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String pageTitle;
-  const CustomAppBar({super.key, required this.pageTitle});
+  final VoidCallback? onPressed;
+  const CustomAppBar({super.key, required this.pageTitle, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +14,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.primary,
       foregroundColor: AppColors.white,
       leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        onPressed:
+            onPressed ??
+            () {
+              Navigator.pop(context);
+            },
         icon: Icon(PhosphorIconsBold.caretLeft),
       ),
       centerTitle: true,

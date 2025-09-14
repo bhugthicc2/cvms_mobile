@@ -1,12 +1,15 @@
 import 'dart:async';
-
 import 'package:cvms_mobile/core/routes/app_routes.dart';
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
+import 'package:cvms_mobile/core/theme/app_strings.dart';
+import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
+import 'package:cvms_mobile/features/auth/bloc/auth_state.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_copywriter.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_heading.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_sub_heading.dart';
 import 'package:cvms_mobile/features/splash/widgets/visuals/custom_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -19,9 +22,13 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-
-    Timer(const Duration(seconds: 3), () {
-      if (mounted) {
+    context.read<AuthCubit>().checkKeepLoggedIn();
+    context.read<AuthCubit>().stream.listen((state) async {
+      await Future.delayed(const Duration(seconds: 3));
+      if (!mounted) return;
+      if (state is AuthAuthenticated) {
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
+      } else if (state is AuthLoggedOut) {
         Navigator.pushReplacementNamed(context, AppRoutes.login);
       }
     });
@@ -42,15 +49,13 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             CustomLogo(logo: 'assets/images/jrmsu_logo.png'),
             AppSpacing.vSm,
-            CustomHeading(heading: 'JRMSU - K'),
-            CustomSubHeading(
-              subheading: 'CLOUD-BASED VEHICLE MONITORING SYSTEM',
-            ),
-            Spacer(),
-            CustomCopywriter(copywriter: '© CDRRMSU - KATIPUNAN, 2025'),
+            CustomHeading(heading: AppStrings.appName),
+            CustomSubHeading(subheading: AppStrings.appInfo),
+            const Spacer(),
+            CustomCopywriter(copywriter: AppStrings.copyright),
             AppSpacing.vSm,
           ],
         ),

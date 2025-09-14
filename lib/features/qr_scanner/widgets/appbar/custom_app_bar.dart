@@ -5,16 +5,20 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String pageTitle;
-  final bool? showActions; //todo optionally show actions
+  final VoidCallback toggleTorch;
+
+  final VoidCallback switchCam;
   const CustomAppBar({
     super.key,
     required this.pageTitle,
-    this.showActions = true,
+    required this.toggleTorch,
+    required this.switchCam,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       backgroundColor: AppColors.primary,
       foregroundColor: AppColors.white,
       leading: IconButton(
@@ -31,22 +35,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: AppFontSizes.bodyMedium,
         ),
       ),
-      // if( showActions == true) {
+
       actions: [
         IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: toggleTorch,
           icon: Icon(PhosphorIconsBold.camera),
         ),
         IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: switchCam,
           icon: Icon(PhosphorIconsBold.lightning),
         ),
       ],
-      // }
     );
   }
 

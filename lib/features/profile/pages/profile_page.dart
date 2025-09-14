@@ -1,12 +1,11 @@
+import 'package:cvms_mobile/core/routes/app_routes.dart';
 import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
 import 'package:cvms_mobile/core/widgets/custom_button.dart';
 import 'package:cvms_mobile/core/widgets/custom_header.dart';
 import 'package:cvms_mobile/features/profile/widgets/custom_text_field.dart';
-
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-
 import '../../../core/widgets/custom_app_bar.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -21,7 +20,13 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
 
-      appBar: CustomAppBar(pageTitle: 'Profile'),
+      appBar: CustomAppBar(
+        pageTitle: 'Profile',
+        onPressed: () {
+          //todo
+          Navigator.pushNamed(context, AppRoutes.home);
+        },
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

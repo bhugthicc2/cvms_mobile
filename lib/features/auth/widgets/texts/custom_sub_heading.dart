@@ -4,7 +4,16 @@ import 'package:flutter/material.dart';
 
 class CustomSubHeading extends StatelessWidget {
   final String subheading;
-  const CustomSubHeading({super.key, required this.subheading});
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final Color? fontColor;
+  const CustomSubHeading({
+    super.key,
+    required this.subheading,
+    this.fontSize,
+    this.fontWeight,
+    this.fontColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +22,9 @@ class CustomSubHeading extends StatelessWidget {
       textAlign: TextAlign.center,
       style: TextStyle(
         fontFamily: 'Sora',
-        fontWeight: FontWeight.w500,
-        fontSize: AppFontSizes.bodySmall,
-        color: AppColors.subheading,
+        fontWeight: fontWeight ?? FontWeight.w500,
+        fontSize: fontSize ?? AppFontSizes.bodySmall,
+        color: fontColor ?? AppColors.subheading,
       ),
     );
   }

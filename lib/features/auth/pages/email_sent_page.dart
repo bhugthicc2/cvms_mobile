@@ -3,6 +3,10 @@ import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_font_sizes.dart';
 import 'package:cvms_mobile/core/widgets/custom_button.dart';
 import 'package:cvms_mobile/features/auth/widgets/appbar/custom_appbar.dart';
+import 'package:cvms_mobile/features/auth/widgets/buttons/custom_helper_link.dart';
+import 'package:cvms_mobile/features/auth/widgets/texts/custom_heading.dart';
+import 'package:cvms_mobile/features/auth/widgets/texts/custom_sub_heading.dart';
+import 'package:cvms_mobile/features/auth/widgets/visuals/custom_illustration.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_spacing.dart';
@@ -25,33 +29,28 @@ class EmailSentPage extends StatelessWidget {
               AppSpacing.vXxl,
               Align(
                 alignment: Alignment.center,
-                child: Text(
-                  'Email has been sent',
-                  style: TextStyle(
-                    fontFamily: 'Sora',
-                    fontSize: AppFontSizes.bodyLarge,
-                    color: AppColors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: CustomHeading(
+                  heading: 'Email has been sent',
+                  fontSize: AppFontSizes.bodyLarge,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Align(
                 alignment: Alignment.center,
-                child: Text(
-                  textAlign: TextAlign.center,
-                  'Please check your inbox and click inthe\n received link to reset your password.',
-                  style: TextStyle(
-                    fontFamily: 'Sora',
-                    fontSize: AppFontSizes.bodySmall,
-                    color: AppColors.grey400,
-                  ),
+                child: CustomSubHeading(
+                  subheading:
+                      'Please check your inbox and click inthe\n received link to reset your password.',
+                  fontSize: AppFontSizes.bodySmall,
+                  fontColor: AppColors.grey400,
                 ),
               ),
+
               AppSpacing.vXxl,
-              Image.asset(
-                'assets/images/emailsent_illustration.png',
-                fit: BoxFit.cover,
+
+              CustomIllustration(
+                image: 'assets/images/emailsent_illustration.png',
               ),
+
               AppSpacing.vXxl,
               SizedBox(
                 width: double.infinity,
@@ -64,35 +63,12 @@ class EmailSentPage extends StatelessWidget {
                 ),
               ),
               AppSpacing.vSm,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    textAlign: TextAlign.center,
-                    "Didn't receive link?",
-                    style: TextStyle(
-                      fontFamily: 'Sora',
-                      fontSize: AppFontSizes.bodySmall,
-                      color: AppColors.grey400,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //todo
-                      Navigator.pushNamed(context, AppRoutes.forgotPass);
-                    },
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      'Resend',
-                      style: TextStyle(
-                        fontFamily: 'Sora',
-                        fontSize: AppFontSizes.bodySmall,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+              CustomHelperLink(
+                text: "Didn't receive link",
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.forgotPass);
+                },
+                btnText: 'Resend',
               ),
             ],
           ),

@@ -6,8 +6,10 @@ class QrScannerFramePainter extends CustomPainter {
   final double cornerFraction;
   final double radiusFraction;
   final double strokeFraction;
+  final Color frameColor;
 
   QrScannerFramePainter({
+    this.frameColor = AppColors.primary,
     this.cutoutFraction = 0.75,
     this.cornerFraction = 0.15,
     this.radiusFraction = 0.05,
@@ -49,7 +51,7 @@ class QrScannerFramePainter extends CustomPainter {
     //Blue rounded corners
     final cornerPaint =
         Paint()
-          ..color = AppColors.primary
+          ..color = frameColor
           ..style = PaintingStyle.stroke
           ..strokeWidth = strokeWidth
           ..strokeCap = StrokeCap.round
@@ -113,5 +115,7 @@ class QrScannerFramePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant QrScannerFramePainter oldDelegate) {
+    return oldDelegate.frameColor != frameColor;
+  }
 }

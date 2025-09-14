@@ -1,4 +1,7 @@
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
+import 'package:cvms_mobile/core/theme/app_strings.dart';
+import 'package:cvms_mobile/features/home/widgets/drawer/custom_divider.dart';
+import 'package:cvms_mobile/features/home/widgets/drawer/custom_list_tile.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_heading.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_sub_heading.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +28,7 @@ class CustomDrawer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //header
+          //header dawg
           Container(
             width: double.infinity,
             height: 230,
@@ -33,13 +36,14 @@ class CustomDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.primary,
               image: DecorationImage(
-                image: AssetImage('assets/images/sidebar_header_bg.png'),
+                image: const AssetImage('assets/images/sidebar_header_bg.png'),
                 fit: BoxFit.cover,
               ),
             ),
             child: SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
                     radius: 40,
@@ -47,80 +51,54 @@ class CustomDrawer extends StatelessWidget {
                     child: Image.asset("assets/images/jrmsu_logo.png"),
                   ),
                   AppSpacing.vSm,
-                  CustomHeading(
-                    heading: 'JRMSU - K',
+                  const CustomHeading(
+                    heading: AppStrings.appName,
                     headingFontSize: AppFontSizes.bodyLarge,
                   ),
                   AppSpacing.vXxs,
-                  CustomSubHeading(
-                    subheading: 'CLOUD-BASED VEHICLE MONITORING SYSTEM',
+                  const CustomSubHeading(
+                    subheading: AppStrings.appInfo,
                     subheadingFontSize: AppFontSizes.caption - 1,
                   ),
                 ],
               ),
             ),
           ),
-
-          //items
-          _drawerItem(
+          //list tiles
+          CustomListTile(
             icon: PhosphorIconsBold.user,
             label: "Profile",
             onTap:
                 () =>
                     Navigator.pushReplacementNamed(context, AppRoutes.profile),
           ),
-          Container(color: AppColors.grey300.withValues(alpha: 0.5), height: 1),
-          _drawerItem(
-            icon: PhosphorIconsBold.gearFine,
+          const CustomDivider(),
+          CustomListTile(
+            icon: PhosphorIconsBold.info,
             label: "About",
-            onTap: () => Navigator.pushNamed(context, AppRoutes.entryScan),
+            onTap: () => Navigator.pushNamed(context, AppRoutes.about),
           ),
-          Container(color: AppColors.grey300.withValues(alpha: 0.5), height: 1),
-          _drawerItem(
-            icon: PhosphorIconsBold.signOut,
+          const CustomDivider(),
+          CustomListTile(
+            icon: PhosphorIconsBold.gearFine,
             label: "Settings",
-            onTap: () => Navigator.pushNamed(context, AppRoutes.exitScan),
+            onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
           ),
-          Container(color: AppColors.grey300.withValues(alpha: 0.5), height: 1),
+          const CustomDivider(),
           const Spacer(),
-          _drawerItem(
+          CustomListTile(
             icon: PhosphorIconsBold.signOut,
             label: "Logout",
             color: Colors.red,
             onTap: () {
+              // todo add logout logic
               Navigator.pop(context);
+              Navigator.pushNamed(context, AppRoutes.login);
               // todo add logout logic
             },
           ),
         ],
       ),
-    );
-  }
-
-  Widget _drawerItem({
-    required IconData icon,
-
-    required String label,
-    required VoidCallback onTap,
-    Color? color,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: color ?? AppColors.black, size: 22),
-      trailing: Icon(
-        PhosphorIconsBold.caretRight,
-        color: color ?? AppColors.grey400,
-        size: 22,
-      ),
-      title: Text(
-        label,
-        style: TextStyle(
-          fontSize: AppFontSizes.bodySmall,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'Sora',
-          color: color ?? AppColors.black,
-        ),
-      ),
-      onTap: onTap,
     );
   }
 }
