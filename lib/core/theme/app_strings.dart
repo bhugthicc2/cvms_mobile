@@ -36,6 +36,6 @@ class AppStrings {
   //Chart categories
   static const String entered = 'Entered';
   static const String exited = 'Exited';
-  static const String others = 'Others';
+  static const String violation = 'Violations';
   static const String total = 'Total';
 }

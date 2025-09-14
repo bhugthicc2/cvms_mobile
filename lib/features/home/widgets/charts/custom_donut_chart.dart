@@ -14,7 +14,9 @@ class CustomDonutChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = _calculateTotal();
-
+    // empty data to display
+    final displayData =
+        total == 0 ? [ChartModel('No Data', 1, AppColors.grey300)] : data;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -64,9 +66,13 @@ class CustomDonutChart extends StatelessWidget {
                         AppSpacing.hXs,
 
                         Expanded(
-                          child: Text(
-                            percent,
-                            style: Theme.of(context).textTheme.labelMedium,
+                          child: SizedBox(
+                            width: 27,
+                            child: Text(
+                              overflow: TextOverflow.ellipsis,
+                              percent,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
                           ),
                         ),
                       ],
@@ -85,7 +91,7 @@ class CustomDonutChart extends StatelessWidget {
               DoughnutSeries<ChartModel, String>(
                 strokeColor: Colors.white,
                 strokeWidth: 2,
-                dataSource: data,
+                dataSource: displayData,
                 xValueMapper: (ChartModel d, _) => d.category,
                 yValueMapper: (ChartModel d, _) => d.value,
                 pointColorMapper: (ChartModel d, _) => d.color,
