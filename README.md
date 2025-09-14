@@ -44,5 +44,3 @@
 - Responsive UI optimized for mobile devices
 
 ---
-
-## 📂 Project Structure (Relevant Sections)
