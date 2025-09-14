@@ -1,10 +1,13 @@
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
 import 'package:cvms_mobile/core/theme/app_strings.dart';
+import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
+import 'package:cvms_mobile/features/auth/widgets/dialogs/custom_logout_dialog.dart';
 import 'package:cvms_mobile/features/home/widgets/drawer/custom_divider.dart';
 import 'package:cvms_mobile/features/home/widgets/drawer/custom_list_tile.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_heading.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_sub_heading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_font_sizes.dart';
@@ -12,6 +15,32 @@ import 'package:cvms_mobile/core/routes/app_routes.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
+
+  void _handleLogout(BuildContext context) {
+    //todo add proper impl soon
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return CustomLogoutDialog(
+          onCancel: () => Navigator.of(dialogContext).pop(),
+          onSubmit: () {
+            Navigator.of(dialogContext).pop();
+            _performLogout(context);
+          },
+        );
+      },
+    );
+  }
+
+  void _performLogout(BuildContext context) {
+    Navigator.pop(context);
+    context.read<AuthCubit>().signOut();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.login,
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +119,7 @@ class CustomDrawer extends StatelessWidget {
             icon: PhosphorIconsBold.signOut,
             label: "Logout",
             color: Colors.red,
-            onTap: () {
-              // todo add logout logic
-              Navigator.pop(context);
-              Navigator.pushNamed(context, AppRoutes.login);
-              // todo add logout logic
-            },
+            onTap: () => _handleLogout(context),
           ),
         ],
       ),

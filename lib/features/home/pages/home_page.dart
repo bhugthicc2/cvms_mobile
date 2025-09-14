@@ -1,6 +1,8 @@
 import 'package:cvms_mobile/core/routes/app_routes.dart';
 import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
+import 'package:cvms_mobile/core/theme/app_strings.dart';
+import 'package:cvms_mobile/core/utils/time_greeting_helper.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_state.dart';
 import 'package:cvms_mobile/features/home/models/chart_model.dart';
@@ -22,6 +24,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final greeting = TimeGreetingHelper.greeting();
     final size = MediaQuery.of(context).size;
     final headerHeight = size.height * 0.33;
     final statOffsetY = headerHeight * 0.20;
@@ -35,7 +38,6 @@ class HomePage extends StatelessWidget {
 
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
-        // Get the current user from the cubit
         final currentUser =
             context.read<AuthCubit>().state is AuthAuthenticated
                 ? (context.read<AuthCubit>().state as AuthAuthenticated).user
@@ -65,12 +67,12 @@ class HomePage extends StatelessWidget {
                               ),
                         ),
                         AppSpacing.vLg,
-                        //todo greetings
-                        const CustomUserGreetings(greeting: 'Good Morning,'),
+                        CustomUserGreetings(greeting: '$greeting, '),
                         AppSpacing.vXxs,
-                        //display the current logged in user
                         CustomUserText(
-                          userName: currentUser?.fullname ?? 'User',
+                          userName:
+                              currentUser?.fullname ??
+                              AppStrings.securityPersonnel,
                         ),
                       ],
                     ),
@@ -98,7 +100,7 @@ class HomePage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Transform.translate(
                     offset: Offset(0, -qaLabelOffsetY),
-                    child: const CustomQaLabel(label: 'Quick Actions'),
+                    child: const CustomQaLabel(label: AppStrings.qaLabel),
                   ),
                 ),
               ),
@@ -120,8 +122,8 @@ class HomePage extends StatelessWidget {
                             Navigator.pushNamed(context, AppRoutes.entryScan);
                           },
                           linearGradient: AppColors.greenWhite,
-                          actionTitle: 'Entrance Scan',
-                          actionSubTitle: 'Scan entrance QR',
+                          actionTitle: AppStrings.entranceScanTitle,
+                          actionSubTitle: AppStrings.entranceScanSubtitle,
                           icon: PhosphorIconsBold.gridFour,
                         ),
                         CustomQuickActions(
@@ -129,8 +131,8 @@ class HomePage extends StatelessWidget {
                             Navigator.pushNamed(context, AppRoutes.exitScan);
                           },
                           linearGradient: AppColors.yellowWhite,
-                          actionTitle: 'Exit Scan',
-                          actionSubTitle: 'Scan exit QR',
+                          actionTitle: AppStrings.exitScanTitle,
+                          actionSubTitle: AppStrings.exitScanSubtitle,
                           icon: PhosphorIconsBold.signOut,
                         ),
                         CustomQuickActions(
@@ -138,8 +140,8 @@ class HomePage extends StatelessWidget {
                             Navigator.pushNamed(context, AppRoutes.vehicleScan);
                           },
                           linearGradient: AppColors.blueWhite,
-                          actionTitle: 'Vehicle Scan',
-                          actionSubTitle: 'Scan vehicles QR',
+                          actionTitle: AppStrings.vehicleScanTitle,
+                          actionSubTitle: AppStrings.vehicleScanSubtitle,
                           icon: PhosphorIconsBold.motorcycle,
                         ),
                         CustomQuickActions(
@@ -150,8 +152,8 @@ class HomePage extends StatelessWidget {
                             );
                           },
                           linearGradient: AppColors.pinkWhite,
-                          actionTitle: 'Recent Activity',
-                          actionSubTitle: 'View activity history',
+                          actionTitle: AppStrings.recentActivityTitle,
+                          actionSubTitle: AppStrings.recentActivitySubtitle,
                           icon: PhosphorIconsBold.arrowCounterClockwise,
                         ),
                       ],

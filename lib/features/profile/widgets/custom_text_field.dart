@@ -4,7 +4,23 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String labelText;
-  const CustomTextField({super.key, required this.labelText});
+  final TextEditingController? controller;
+  final bool readOnly;
+  final String? initialValue;
+  final void Function(String)? onChanged;
+  final TextInputType? keyboardType;
+  final bool enabled;
+
+  const CustomTextField({
+    super.key,
+    required this.labelText,
+    this.controller,
+    this.readOnly = false,
+    this.initialValue,
+    this.onChanged,
+    this.keyboardType,
+    this.enabled = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +31,7 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
             blurRadius: 6,
             spreadRadius: 4,
             color: Color(0xFFBCBCBC).withValues(alpha: 0.25),
@@ -25,6 +41,12 @@ class CustomTextField extends StatelessWidget {
       ),
       child: Center(
         child: TextFormField(
+          controller: controller,
+          readOnly: readOnly,
+          enabled: enabled,
+          keyboardType: keyboardType,
+          onChanged: onChanged,
+          initialValue: controller == null ? initialValue : null,
           style: TextStyle(
             fontFamily: 'Sora',
             fontWeight: FontWeight.w600,
@@ -48,6 +70,11 @@ class CustomTextField extends StatelessWidget {
             focusedBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             focusedErrorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 0,
+              vertical: 12,
+            ),
           ),
         ),
       ),
