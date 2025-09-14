@@ -1,4 +1,7 @@
+import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
+import 'package:cvms_mobile/core/theme/app_strings.dart';
+import 'package:cvms_mobile/core/utils/number_formatter.dart';
 import 'package:cvms_mobile/features/home/models/chart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -21,7 +24,9 @@ class CustomDonutChart extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children:
                 data.map((item) {
-                  final percent = (item.value / total * 100).toStringAsFixed(0);
+                  final percent = NumberFormatter.percent(item.value, total);
+                  final formattedValue = NumberFormatter.compact(item.value);
+
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Row(
@@ -39,25 +44,30 @@ class CustomDonutChart extends StatelessWidget {
                         SizedBox(
                           width: 50,
                           child: Text(
+                            overflow: TextOverflow.ellipsis,
                             item.category,
                             style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ),
                         AppSpacing.hXs,
 
-                        SizedBox(
-                          width: 25,
-                          child: Text(
-                            '${item.value.toInt()}',
-                            style: Theme.of(context).textTheme.labelMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: SizedBox(
+                            width: 27,
+                            child: Text(
+                              formattedValue,
+                              style: Theme.of(context).textTheme.labelMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         AppSpacing.hXs,
 
-                        Text(
-                          '$percent%',
-                          style: Theme.of(context).textTheme.labelMedium,
+                        Expanded(
+                          child: Text(
+                            percent,
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
                         ),
                       ],
                     ),
@@ -89,10 +99,10 @@ class CustomDonutChart extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Total',
+                      AppStrings.total,
                       style: Theme.of(
                         context,
-                      ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+                      ).textTheme.bodySmall?.copyWith(color: AppColors.grey400),
                     ),
                     Text(
                       total.toString(),

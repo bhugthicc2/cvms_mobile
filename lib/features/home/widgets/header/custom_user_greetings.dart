@@ -9,6 +9,7 @@ class CustomUserGreetings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       greeting,
+      overflow: TextOverflow.ellipsis,
       style: Theme.of(
         context,
       ).textTheme.bodySmall?.copyWith(color: AppColors.white),

@@ -32,4 +32,10 @@ class AppStrings {
   static const String vehicleScanSubtitle = 'Scan vehicles QR';
   static const String recentActivityTitle = 'Recent Activity';
   static const String recentActivitySubtitle = 'View activity history';
+
+  //Chart categories
+  static const String entered = 'Entered';
+  static const String exited = 'Exited';
+  static const String others = 'Others';
+  static const String total = 'Total';
 }

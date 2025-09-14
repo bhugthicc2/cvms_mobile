@@ -31,9 +31,9 @@ class HomePage extends StatelessWidget {
     final qaLabelOffsetY = headerHeight * 0.12;
     final gridOffsetY = headerHeight * 0.03;
     final chartData = [
-      ChartModel('Entered', 45, const Color(0xFFFACC15)),
-      ChartModel('Exited', 75, const Color(0xFF3B82F6)),
-      ChartModel('Others', 180, const Color(0xFF14B8A6)),
+      ChartModel(AppStrings.entered, 500, const Color(0xFFFACC15)),
+      ChartModel(AppStrings.exited, 500, const Color(0xFF3B82F6)),
+      ChartModel(AppStrings.others, 500, const Color(0xFF14B8A6)),
     ];
 
     return BlocBuilder<AuthCubit, AuthState>(
