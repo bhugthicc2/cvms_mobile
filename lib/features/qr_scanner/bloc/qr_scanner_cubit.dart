@@ -10,67 +10,68 @@ class QrScannerCubit extends Cubit<QrScannerState> {
 
   QrScannerCubit() : super(const QrScannerState());
 
-  void onDetect(BarcodeCapture capture, void Function(String) onScan) async {
+  // Called automatically when the camera detects a QR code;
+  // extracts its value and passes it to onScanAsync for processing.
+  void onDetect(
+    BarcodeCapture capture,
+    Future<bool> Function(String) onScanAsync, // now expects true or false
+  ) async {
+    //if processing and barcodes are empty ignore
     if (state.isProcessing || capture.barcodes.isEmpty) return;
-
+    // 1 stores the qr value
+    //takes the first barcode that was captured from the list of barcodes
     final qrValue = capture.barcodes.first.rawValue ?? "Unknown QR";
-
-    // Haptic feedback
+    // Haptic feedback for vibration
     HapticFeedback.mediumImpact();
+    //mark scanning as “in progress” | remember which QR was scanned|
+    emit(state.copyWith(isProcessing: true, lastScannedValue: qrValue));
 
-    onScan(qrValue);
+    bool success = false; //keep track of a success/failure state
+    // ignore: unused_local_variable
+    String? errorMessage; //keep track for the error message
+    try {
+      //2 Calling onScanAsync with qrValue
+      success = await onScanAsync(
+        qrValue,
+      ); // runs an async QR-validation function and waits for its boolean result before moving on. | must return true/false
+      // 26 onscan async returned true | success == true
+    } catch (e) {
+      success = false;
+      //set success into false
+      errorMessage = e.toString();
+      //store the error message
+    }
 
-    // Determine color based on QR validity and data matching
-    var color = _determineFrameColor(qrValue);
-
-    // Play sound based on result
-    if (color == AppColors.success) {
-      SoundHelper.playSuccess();
-    } else if (color == AppColors.error) {
-      SoundHelper.playError();
+    final Color color; //stores the color
+    if (qrValue.isEmpty || qrValue == "Unknown QR") {
+      color = AppColors.error; //color when no qr is detected
+    } else if (success) {
+      color = AppColors.success; //color when the async validation is true
+      // 27 success detected
     } else {
-      SoundHelper.playWarning();
+      color =
+          AppColors.error; //color fallback if those options above are not true
+    }
+    // 28 about to play sound success
+    if (success) {
+      // 29 playing success sound
+      //play success sound if async validation is true
+      SoundHelper.playSuccess();
+    } else {
+      //play error sound if async validation is false
+      SoundHelper.playError();
     }
 
     emit(
-      state.copyWith(
-        isProcessing: true,
-        lastScannedValue: qrValue,
-        frameColor: color,
-      ),
-    );
+      state.copyWith(frameColor: color),
+    ); //changes the frame color based on the async validation result
 
-    // Reset after delay
+    // Wait 2 seconds to show success/error feedback,
+    //then reset the scanner state back to normal (default color, ready for next scan).
     Future.delayed(const Duration(seconds: 2), () {
-      if (isClosed) return;
+      if (isClosed) return; // don’t update if cubit/page is already closed
       emit(state.copyWith(isProcessing: false, frameColor: AppColors.primary));
     });
-  }
-
-  Color _determineFrameColor(String qrValue) {
-    // Check if QR is valid format (not empty, not "Unknown QR")
-    if (qrValue.isEmpty || qrValue == "Unknown QR") {
-      return AppColors.error;
-    }
-
-    // Check if data matches expected format (you can customize this logic)
-    if (_isValidData(qrValue)) {
-      return AppColors.success;
-    } else {
-      return AppColors.warning;
-    }
-  }
-
-  bool _isValidData(String qrValue) {
-    // todo implement logic soon
-    // 1. Scan QR code → extract vehicleDocId
-    // 2. Check Firestore → does this ID exist in the vehicles collection?
-    // 3. Check status → is it "outside"?
-    // 4. If valid →
-    // 5. Create a new log in vehicle_logs
-    // 6. Update the vehicle status to "inside"
-    // 7. Else → show error (like "Already inside" or "Invalid vehicle").
-    return qrValue.length >= 3;
   }
 
   void toggleTorch() {

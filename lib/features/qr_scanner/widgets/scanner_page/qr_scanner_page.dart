@@ -11,7 +11,7 @@ import '../../bloc/qr_scanner_state.dart';
 class QrScannerPage extends StatelessWidget {
   final String pageTitle;
   final String instructionText;
-  final ValueChanged<String> onScan;
+  final Future<bool> Function(String) onScan;
   final bool isExit;
 
   const QrScannerPage({
@@ -44,7 +44,9 @@ class QrScannerPage extends StatelessWidget {
               children: [
                 Positioned.fill(
                   child: MobileScanner(
+                    //mobile scanner controller - controls the qr scanner like start/stop etc.
                     controller: cubit.controller,
+                    // 0 calls ondetect to read qr code data and decide what to do with it
                     onDetect: (capture) => cubit.onDetect(capture, onScan),
                     fit: BoxFit.cover,
                   ),
