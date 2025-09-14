@@ -6,13 +6,17 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String pageTitle;
   final VoidCallback toggleTorch;
-
   final VoidCallback switchCam;
+  final bool isTorchOn;
+  final bool isFrontCamera;
+
   const CustomAppBar({
     super.key,
     required this.pageTitle,
     required this.toggleTorch,
     required this.switchCam,
+    this.isTorchOn = false,
+    this.isFrontCamera = false,
   });
 
   @override
@@ -37,13 +41,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
 
       actions: [
-        IconButton(
-          onPressed: toggleTorch,
-          icon: Icon(PhosphorIconsBold.camera),
-        ),
+        // Camera switch button
         IconButton(
           onPressed: switchCam,
-          icon: Icon(PhosphorIconsBold.lightning),
+          icon: Icon(
+            isFrontCamera ? PhosphorIconsFill.camera : PhosphorIconsBold.camera,
+          ),
+          tooltip:
+              isFrontCamera
+                  ? 'Switch to back camera'
+                  : 'Switch to front camera',
+        ),
+        // Torch toggle button
+        IconButton(
+          onPressed: toggleTorch,
+          icon: Icon(
+            isTorchOn
+                ? PhosphorIconsFill.lightning
+                : PhosphorIconsBold.lightning,
+          ),
+          tooltip: isTorchOn ? 'Turn off torch' : 'Turn on torch',
         ),
       ],
     );

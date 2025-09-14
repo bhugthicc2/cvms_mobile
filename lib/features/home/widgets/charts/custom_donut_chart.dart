@@ -55,7 +55,7 @@ class CustomDonutChart extends StatelessWidget {
 
                         Expanded(
                           child: SizedBox(
-                            width: 27,
+                            width: 26,
                             child: Text(
                               formattedValue,
                               style: Theme.of(context).textTheme.labelMedium

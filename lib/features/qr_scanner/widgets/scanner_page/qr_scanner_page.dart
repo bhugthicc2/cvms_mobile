@@ -38,6 +38,8 @@ class QrScannerPage extends StatelessWidget {
               pageTitle: pageTitle,
               toggleTorch: cubit.toggleTorch,
               switchCam: cubit.switchCamera,
+              isTorchOn: state.torchEnabled,
+              isFrontCamera: state.usingFrontCamera,
             ),
             body: Stack(
               fit: StackFit.expand,

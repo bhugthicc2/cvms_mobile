@@ -16,7 +16,6 @@ class RecentActivityPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
-
       appBar: CustomAppBar(pageTitle: 'Recent Activity'),
       body: Stack(
         children: [
