@@ -8,6 +8,7 @@ import 'package:cvms_mobile/features/home/pages/home_page.dart';
 import 'package:cvms_mobile/features/qr_scanner/pages/exit_scan_page.dart';
 import 'package:cvms_mobile/features/qr_scanner/pages/vehicle_scan_page.dart';
 import 'package:cvms_mobile/features/settings/pages/settings_page.dart';
+import 'package:cvms_mobile/features/vehicle_info/pages/vehicle_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cvms_mobile/features/splash/pages/splash_page.dart';
 import 'package:cvms_mobile/features/auth/pages/login_page.dart';
@@ -21,7 +22,7 @@ class AppRouteGenerator {
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case AppRoutes.home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(builder: (_) => HomePage());
       case AppRoutes.forgotPass:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
       case AppRoutes.emailSent:
@@ -34,6 +35,8 @@ class AppRouteGenerator {
         return MaterialPageRoute(builder: (_) => const VehicleScanPage());
       case AppRoutes.recentActivity:
         return MaterialPageRoute(builder: (_) => const RecentActivityPage());
+      case AppRoutes.vehicleInfo:
+        return MaterialPageRoute(builder: (_) => const VehicleInfoPage());
       case AppRoutes.profile:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
       case AppRoutes.about:

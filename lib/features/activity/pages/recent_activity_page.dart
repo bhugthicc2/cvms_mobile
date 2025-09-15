@@ -11,59 +11,27 @@ class RecentActivityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
-    final headerHeight = size.height * 0.29;
+    final headerHeight = size.height * 0.28;
+    final recentItemsCount = 10;
 
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(pageTitle: 'Recent Activity'),
       body: Stack(
         children: [
-          SizedBox(
-            height: headerHeight,
-            width: double.infinity,
-            child: CustomHeader(
-              headerHeight: headerHeight,
-              backgroundColor: AppColors.primary,
-              padding: AppSpacing.homePadding,
+          CustomHeader(headerHeight: headerHeight),
+          ListView.separated(
+            padding: EdgeInsets.only(
+              top: AppSpacing.md,
+              left: AppSpacing.horizontalLg.left,
+              right: AppSpacing.horizontalLg.right,
+              bottom: AppSpacing.lg,
             ),
-          ),
-          Positioned(
-            child: Expanded(
-              child: SizedBox(
-                child: Padding(
-                  padding: AppSpacing.horizontalLg,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vSm,
-                        CustomRecentTile(),
-                        AppSpacing.vLg,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            itemCount: recentItemsCount,
+            separatorBuilder: (_, __) => AppSpacing.vSm,
+            itemBuilder: (context, index) {
+              return const CustomRecentTile();
+            },
           ),
         ],
       ),

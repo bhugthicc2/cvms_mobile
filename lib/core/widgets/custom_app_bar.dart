@@ -6,7 +6,13 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String pageTitle;
   final VoidCallback? onPressed;
-  const CustomAppBar({super.key, required this.pageTitle, this.onPressed});
+  final List<Widget>? actions;
+  const CustomAppBar({
+    super.key,
+    required this.pageTitle,
+    this.onPressed,
+    this.actions,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: AppFontSizes.bodyMedium,
         ),
       ),
+      actions: actions,
     );
   }
 

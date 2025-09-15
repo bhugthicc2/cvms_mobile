@@ -22,16 +22,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     final greeting = TimeGreetingHelper.greeting();
     final size = MediaQuery.of(context).size;
-    final headerHeight = size.height * 0.33;
-    final statOffsetY = headerHeight * 0.20;
-    final qaLabelOffsetY = headerHeight * 0.12;
-    final gridOffsetY = headerHeight * 0.03;
+    final headerHeight = size.height * 0.30 - kToolbarHeight;
+    final statOffsetY = headerHeight * 0.31;
+    final qaLabelOffsetY = headerHeight * 0.19;
+    final gridOffsetY = headerHeight * 0.09;
 
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
@@ -46,7 +48,13 @@ class HomePage extends StatelessWidget {
                   VehicleStatsCubit(VehicleLogsRepository())
                     ..watchVehicleStats(),
           child: Scaffold(
+            key: _scaffoldKey,
             backgroundColor: AppColors.white,
+            appBar: CustomAppBar(
+              toggleSidebar: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+            ),
             drawer: const CustomDrawer(),
             body: Column(
               children: [
@@ -60,15 +68,7 @@ class HomePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Builder(
-                            builder:
-                                (context) => CustomAppBar(
-                                  toggleSidebar: () {
-                                    Scaffold.of(context).openDrawer();
-                                  },
-                                ),
-                          ),
-                          AppSpacing.vLg,
+                          AppSpacing.vMd,
                           CustomUserGreetings(greeting: '$greeting, '),
                           AppSpacing.vXxs,
                           CustomUserText(
@@ -81,7 +81,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Expanded(
                   flex: 2,
                   child: Padding(
@@ -161,7 +160,8 @@ class HomePage extends StatelessWidget {
                             onTap: () {
                               Navigator.pushNamed(
                                 context,
-                                AppRoutes.vehicleScan,
+                                // AppRoutes.vehicleScan,
+                                AppRoutes.vehicleInfo,
                               );
                             },
                             linearGradient: AppColors.blueWhite,

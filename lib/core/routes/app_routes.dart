@@ -12,6 +12,7 @@ class AppRoutes {
   static const String exitScan = '/exitScanPage';
   static const String vehicleScan = '/vehicleScanPage';
   static const String recentActivity = '/recentActivityPage';
+  static const String vehicleInfo = '/vehicleInfoPage';
   static const String profile = '/profile';
   static const String about = '/about';
   static const String settings = '/settings';
