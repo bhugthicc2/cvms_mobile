@@ -1,0 +1,61 @@
+import 'package:cvms_mobile/features/qr_scanner/bloc/vehicle_scan_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../data/vehicle_repository.dart';
+
+class VehicleScanCubit extends Cubit<VehicleScanState> {
+  final VehicleRepository repo;
+
+  VehicleScanCubit(this.repo) : super(VehicleScanInitial());
+
+  Future<void> processEntryScan(String vehicleDocId, String updatedBy) async {
+    // 6 starting entry scan process
+    // 7 Vehicle Doc ID
+    // 8 Updated by
+
+    emit(VehicleScanLoading());
+    try {
+      // Check vehicle doc ID
+      // Add a vehicle log
+      // Update the vehicle status to inside
+      await repo.handleEntryScan(
+        vehicleDocId: vehicleDocId,
+        updatedBy: updatedBy,
+      );
+      // 19 entry scan completed successfully
+      emit(VehicleScanSuccess("Vehicle entered successfully"));
+    } catch (e) {
+      //entry scan unsuccessful
+      emit(VehicleScanError(e.toString()));
+    }
+  }
+
+  Future<void> processExitScan(String vehicleDocId, String updatedBy) async {
+    emit(VehicleScanLoading());
+    try {
+      await repo.handleExitScan(
+        vehicleDocId: vehicleDocId,
+        updatedBy: updatedBy,
+      );
+
+      emit(VehicleScanSuccess("Vehicle exited successfully"));
+    } catch (e) {
+      emit(VehicleScanError(e.toString()));
+    }
+  }
+
+  //retrieve vehicle by id dawg
+  Future<void> getVehicleById(String vehicleId) async {
+    emit(VehicleScanLoading());
+    try {
+      final vehicle = await repo.getVehicleById(vehicleId);
+
+      if (vehicle != null) {
+        emit(VehicleRetrieved(vehicle));
+      } else {
+        emit(VehicleScanError("Vehicle not found"));
+      }
+    } catch (e) {
+      emit(VehicleScanError(e.toString()));
+    }
+  }
+}

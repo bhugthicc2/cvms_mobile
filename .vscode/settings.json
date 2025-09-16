@@ -1,3 +1,4 @@
 {
-  "cmake.sourceDirectory": "C:/cvms -  thesis final/mobile/cvms_mobile/linux"
+  "cmake.sourceDirectory": "C:/cvms -  thesis final/mobile/cvms_mobile/linux",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
