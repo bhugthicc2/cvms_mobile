@@ -12,6 +12,8 @@
 | QR Scanner Page Loaded      | ![QR Scanner Page Loaded](./app_progress_shots/qr_scanner_loaded.png)           |
 | Profile Page                | ![Profile Page](./app_progress_shots/profile_page.png)                          |
 | Recent Activity Page        | ![Recent Activity Page](./app_progress_shots/recent_activity_page.png)          |
+| Vehicle Information Page    | ![Vehicle Information Page](./app_progress_shots/vehicle_info_page.png)         |
+| Report Vehicle Page         | ![Report Vehicle Page ](./app_progress_shots/report_vehicle_page.png)           |
 
 ---
 
