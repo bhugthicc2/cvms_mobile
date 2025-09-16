@@ -160,8 +160,7 @@ class HomePage extends StatelessWidget {
                             onTap: () {
                               Navigator.pushNamed(
                                 context,
-                                // AppRoutes.vehicleScan,
-                                AppRoutes.vehicleInfo,
+                                AppRoutes.vehicleScan,
                               );
                             },
                             linearGradient: AppColors.blueWhite,

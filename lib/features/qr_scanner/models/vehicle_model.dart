@@ -4,6 +4,10 @@ class VehicleModel {
   final String plateNumber;
   final String vehicleModel;
   final String status; // "inside" or "outside"
+  final String vehicleColor;
+  final String department;
+  final String schoolID;
+  final String gender;
 
   VehicleModel({
     required this.id,
@@ -11,6 +15,10 @@ class VehicleModel {
     required this.plateNumber,
     required this.vehicleModel,
     required this.status,
+    required this.vehicleColor,
+    required this.department,
+    required this.schoolID,
+    required this.gender,
   });
 
   factory VehicleModel.fromMap(Map<String, dynamic> data, String id) {
@@ -20,6 +28,10 @@ class VehicleModel {
       plateNumber: data['plateNumber'] ?? '',
       vehicleModel: data['vehicleModel'] ?? '',
       status: data['status'] ?? 'outside',
+      vehicleColor: data['vehicleColor'] ?? '',
+      department: data['department'] ?? '',
+      schoolID: data['schoolID'] ?? '',
+      gender: data['gender'] ?? '',
     );
   }
 
@@ -29,6 +41,10 @@ class VehicleModel {
       'plateNumber': plateNumber,
       'vehicleModel': vehicleModel,
       'status': status,
+      'vehicleColor': vehicleColor,
+      'department': department,
+      'schoolID': schoolID,
+      'gender': gender,
     };
   }
 }

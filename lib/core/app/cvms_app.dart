@@ -5,6 +5,7 @@ import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
 import 'package:cvms_mobile/features/auth/data/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../routes/route_observer.dart';
 
 class CVMSApp extends StatelessWidget {
   const CVMSApp({super.key});
@@ -24,6 +25,7 @@ class CVMSApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         initialRoute: AppRoutes.splash,
         onGenerateRoute: AppRouteGenerator.generateRoute,
+        navigatorObservers: [appRouteObserver],
       ),
     );
   }

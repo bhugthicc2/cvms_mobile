@@ -1,37 +1,37 @@
 import 'package:cvms_mobile/features/qr_scanner/bloc/vehicle_scan_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/vehicle_repository.dart';
-// crypto service
-import 'package:cvms_mobile/core/services/crypto_service.dart';
 
 class VehicleScanCubit extends Cubit<VehicleScanState> {
   final VehicleRepository repo;
 
   VehicleScanCubit(this.repo) : super(VehicleScanInitial());
 
-  Future<void> processEntryScan(String qrValue, String updatedBy) async {
+  Future<void> processEntryScan(String vehicleDocId, String updatedBy) async {
+    // 6 starting entry scan process
+    // 7 Vehicle Doc ID
+    // 8 Updated by
+
     emit(VehicleScanLoading());
     try {
-      final vehicleDocId = await Future(
-        () => CryptoService.withDefaultKey().decryptVehicleId(qrValue),
-      ); //decrypt the scanned qr value with default key
+      // Check vehicle doc ID
+      // Add a vehicle log
+      // Update the vehicle status to inside
       await repo.handleEntryScan(
         vehicleDocId: vehicleDocId,
         updatedBy: updatedBy,
       );
-
+      // 19 entry scan completed successfully
       emit(VehicleScanSuccess("Vehicle entered successfully"));
     } catch (e) {
-      emit(VehicleScanError("Entry scan failed: ${e.toString()}"));
+      //entry scan unsuccessful
+      emit(VehicleScanError(e.toString()));
     }
   }
 
-  Future<void> processExitScan(String qrValue, String updatedBy) async {
+  Future<void> processExitScan(String vehicleDocId, String updatedBy) async {
     emit(VehicleScanLoading());
     try {
-      final vehicleDocId = await Future(
-        () => CryptoService.withDefaultKey().decryptVehicleId(qrValue),
-      ); //decrypt the scanned qr value with default key
       await repo.handleExitScan(
         vehicleDocId: vehicleDocId,
         updatedBy: updatedBy,
@@ -39,17 +39,14 @@ class VehicleScanCubit extends Cubit<VehicleScanState> {
 
       emit(VehicleScanSuccess("Vehicle exited successfully"));
     } catch (e) {
-      emit(VehicleScanError("Exit scan failed: ${e.toString()}"));
+      emit(VehicleScanError(e.toString()));
     }
   }
 
-  Future<void> getVehicleById(String qrValue) async {
+  //retrieve vehicle by id dawg
+  Future<void> getVehicleById(String vehicleId) async {
     emit(VehicleScanLoading());
     try {
-      final vehicleId = await Future(
-        () => CryptoService.withDefaultKey().decryptVehicleId(qrValue),
-      ); //decrypt the scanned qr value with default key
-
       final vehicle = await repo.getVehicleById(vehicleId);
 
       if (vehicle != null) {
@@ -58,7 +55,7 @@ class VehicleScanCubit extends Cubit<VehicleScanState> {
         emit(VehicleScanError("Vehicle not found"));
       }
     } catch (e) {
-      emit(VehicleScanError("Scan failed: ${e.toString()}"));
+      emit(VehicleScanError(e.toString()));
     }
   }
 }
