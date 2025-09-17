@@ -6,7 +6,9 @@ Future<T?> showCustomBottomSheet<T>({
   required String title,
   required Widget child,
   VoidCallback? onSubmit,
+  VoidCallback? onCancel,
   String submitText = "Submit",
+  String cancelText = 'Cancel',
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -19,7 +21,9 @@ Future<T?> showCustomBottomSheet<T>({
       return CustomBottomSheet(
         title: title,
         onSubmit: onSubmit,
+        onCancel: onCancel,
         submitText: submitText,
+
         child: child,
       );
     },

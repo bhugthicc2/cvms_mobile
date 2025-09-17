@@ -1,13 +1,20 @@
 class VehicleModel {
-  final String id; // Firestore doc ID
+  final String id;
   final String ownerName;
   final String plateNumber;
   final String vehicleModel;
-  final String status; // "inside" or "outside"
+  final String status;
   final String vehicleColor;
   final String department;
   final String schoolID;
   final String gender;
+  final String yearLevel;
+  final String block;
+  final String contact;
+  final String purok;
+  final String barangay;
+  final String city;
+  final String province;
 
   VehicleModel({
     required this.id,
@@ -19,6 +26,13 @@ class VehicleModel {
     required this.department,
     required this.schoolID,
     required this.gender,
+    required this.yearLevel,
+    required this.block,
+    required this.contact,
+    required this.purok,
+    required this.barangay,
+    required this.city,
+    required this.province,
   });
 
   factory VehicleModel.fromMap(Map<String, dynamic> data, String id) {
@@ -32,6 +46,13 @@ class VehicleModel {
       department: data['department'] ?? '',
       schoolID: data['schoolID'] ?? '',
       gender: data['gender'] ?? '',
+      purok: data['purok'] ?? '',
+      yearLevel: data['yearLevel'] ?? '',
+      block: data['block'] ?? '',
+      contact: data['contact'] ?? '',
+      barangay: data['barangay'] ?? '',
+      city: data['city'] ?? '',
+      province: data['province'] ?? '',
     );
   }
 
@@ -45,6 +66,13 @@ class VehicleModel {
       'department': department,
       'schoolID': schoolID,
       'gender': gender,
+      'purok': purok,
+      'yearLevel': yearLevel,
+      'block': block,
+      'contact': contact,
+      'barangay': barangay,
+      'city': city,
+      'province': province,
     };
   }
 }

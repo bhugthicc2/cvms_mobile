@@ -1,8 +1,20 @@
 class AppStrings {
   //app info and branding
   static const String appName = 'JRMSU - K';
+  static const String appNameFull = 'JRMSU - K CVMS';
   static const String appInfo = 'CLOUD-BASED VEHICLE MONITORING SYSTEM';
+  static const String aboutInfo = "Cloud-based Vehicle\nMonitoring System";
   static const String copyright = '© CDRRMSU - KATIPUNAN, 2025';
+  static const String about =
+      'The Cloud-Based Vehicle Monitoring System (CVMS) is designed to provide a secure and efficient way of managing vehicle entries and exits within the JRMSU Katipunan Campus.';
+  static const String goal =
+      'To digitalize the monitoring process of vehicles for improved security, transparency, and record-keeping.';
+
+  //Devs
+  static const String dev1 = 'Jesie Gapol';
+  static const String dev2 = 'Jessa Pagat';
+  static const String dev3 = 'Vincent Jay Lumacad';
+  static const String dev4 = 'Venus Medija';
 
   //auth and user management
   static const String loginHeading = 'LOGIN ACCOUNT';

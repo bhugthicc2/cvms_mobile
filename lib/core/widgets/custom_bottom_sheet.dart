@@ -1,6 +1,7 @@
 import 'package:cvms_mobile/core/theme/app_colors.dart';
 import 'package:cvms_mobile/core/theme/app_font_sizes.dart';
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
+import 'package:cvms_mobile/core/widgets/custom_report_button.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -9,6 +10,7 @@ class CustomBottomSheet extends StatelessWidget {
   final Widget child;
   final VoidCallback? onSubmit;
   final String submitText;
+  final VoidCallback? onCancel;
 
   const CustomBottomSheet({
     super.key,
@@ -16,6 +18,7 @@ class CustomBottomSheet extends StatelessWidget {
     required this.child,
     this.onSubmit,
     this.submitText = "Submit",
+    this.onCancel,
   });
 
   @override
@@ -65,51 +68,24 @@ class CustomBottomSheet extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  //todo separtate in a custom file
-                  child: SizedBox(
-                    child: ElevatedButton(
-                      onPressed: onSubmit,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        side: BorderSide(width: 1.5, color: AppColors.grey400),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                          color: AppColors.grey400,
-                          fontSize: AppFontSizes.bodyMedium,
-                        ),
-                      ),
-                    ),
+                  child: CustomReportButton(
+                    bgColor: Colors.transparent,
+                    isCancel: true,
+                    onTap:
+                        onCancel ??
+                        () {
+                          Navigator.pop(context);
+                        },
+                    btnText: 'Cancel',
                   ),
                 ),
                 AppSpacing.hLg,
                 Expanded(
-                  //todo separtate in a custom file
-                  child: SizedBox(
-                    child: ElevatedButton(
-                      onPressed: onSubmit,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: AppFontSizes.bodyMedium,
-                        ),
-                      ),
-                    ),
+                  child: CustomReportButton(
+                    bgColor: AppColors.primary,
+                    isCancel: false,
+                    onTap: onSubmit!,
+                    btnText: 'Submit',
                   ),
                 ),
               ],
