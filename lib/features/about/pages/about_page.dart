@@ -56,7 +56,7 @@ class AboutPage extends StatelessWidget {
               AppSpacing.vMd,
               // Version
               Text(
-                'v1.1.0', //todo add the real app version
+                'v1.1.0', //todo add the real app version dawg
                 style: TextStyle(
                   fontFamily: 'Sora',
                   fontWeight: FontWeight.w400,
