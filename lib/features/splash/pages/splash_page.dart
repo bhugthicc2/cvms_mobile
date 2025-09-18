@@ -7,7 +7,7 @@ import 'package:cvms_mobile/features/auth/bloc/auth_state.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_copywriter.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_heading.dart';
 import 'package:cvms_mobile/features/splash/widgets/texts/custom_sub_heading.dart';
-import 'package:cvms_mobile/features/splash/widgets/visuals/custom_logo.dart';
+import 'package:cvms_mobile/core/widgets/custom_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,7 +50,7 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            CustomLogo(logo: 'assets/images/jrmsu_logo.png'),
+            CustomLogo(logo: 'assets/images/jrmsu_logo.png', size: 150),
             AppSpacing.vSm,
             CustomHeading(heading: AppStrings.appName),
             CustomSubHeading(subheading: AppStrings.appInfo),

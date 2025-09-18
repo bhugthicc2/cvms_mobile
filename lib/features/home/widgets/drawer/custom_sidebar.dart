@@ -1,6 +1,7 @@
 import 'package:cvms_mobile/core/theme/app_spacing.dart';
 import 'package:cvms_mobile/core/theme/app_strings.dart';
 import 'package:cvms_mobile/core/widgets/custom_banner_toast.dart';
+import 'package:cvms_mobile/core/widgets/custom_logo.dart';
 import 'package:cvms_mobile/features/auth/bloc/auth_cubit.dart';
 import 'package:cvms_mobile/features/auth/widgets/dialogs/custom_logout_dialog.dart';
 import 'package:cvms_mobile/features/home/widgets/drawer/custom_divider.dart';
@@ -80,11 +81,7 @@ class CustomDrawer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: AppColors.white,
-                    child: Image.asset("assets/images/jrmsu_logo.png"),
-                  ),
+                  CustomLogo(size: 75),
                   AppSpacing.vSm,
                   const CustomHeading(
                     heading: AppStrings.appName,
