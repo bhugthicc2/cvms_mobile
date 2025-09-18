@@ -13,36 +13,7 @@
 | Profile Page                | ![Profile Page](./app_progress_shots/profile_page.png)                          |
 | Recent Activity Page        | ![Recent Activity Page](./app_progress_shots/recent_activity_page.png)          |
 | Vehicle Information Page    | ![Vehicle Information Page](./app_progress_shots/vehicle_info_page.png)         |
-| Report Vehicle Page         | ![Report Vehicle Page ](./app_progress_shots/report_vehicle_page.png)           |
-
----
-
-## 👨‍💻 Developer
-
-- Jesie Gapol
-
----
-
-## 🛠 Tech Stack
-
-- **Flutter** – Cross-platform UI
-- **Dart** – Programming language
-- **Firebase** – Backend services
-
----
-
-## 🔄 State Management
-
-- **Bloc (Business Logic Component)** for predictable state management
-
----
-
-## 🚀 Features
-
-- Secure user authentication
-- QR code-based vehicle scanning
-- Real-time data synchronization with Firebase
-- User-friendly dashboard and activity logs
-- Responsive UI optimized for mobile devices
+| Report Violation Page       | ![Report Vehicle Page ](./app_progress_shots/report_violation_page.png)         |
+| About Page                  | ![Report Vehicle Page ](./app_progress_shots/about_page.png)                    |
 
 ---
