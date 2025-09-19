@@ -50,7 +50,7 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            CustomLogo(logo: 'assets/images/jrmsu_logo.png', size: 150),
+            const CustomLogo(logo: 'assets/images/jrmsu_logo.png', size: 150),
             AppSpacing.vSm,
             CustomHeading(heading: AppStrings.appName),
             CustomSubHeading(subheading: AppStrings.appInfo),

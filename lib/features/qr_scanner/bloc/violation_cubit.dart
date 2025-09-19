@@ -1,11 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cvms_mobile/features/qr_scanner/models/violation_model.dart';
+import 'package:cvms_mobile/features/qr_scanner/data/violation_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'violation_state.dart';
 
 class ViolationCubit extends Cubit<ViolationState> {
-  ViolationCubit() : super(ViolationInitial());
+  final ViolationRepository _violationRepository;
+
+  ViolationCubit({ViolationRepository? violationRepository})
+    : _violationRepository = violationRepository ?? ViolationRepository(),
+      super(ViolationInitial());
 
   Future<void> reportViolation({
     required String reportedBy,
@@ -16,20 +19,14 @@ class ViolationCubit extends Cubit<ViolationState> {
   }) async {
     try {
       emit(ViolationLoading());
-      final violationData = ViolationModel(
-        violationID: '', // Firestore will generate ID
-        dateTime: Timestamp.now(),
+
+      await _violationRepository.reportViolation(
         reportedBy: reportedBy,
         plateNumber: plateNumber,
         vehicleID: vehicleID,
         owner: owner,
         violation: violation,
-        status: 'pending',
       );
-
-      await FirebaseFirestore.instance
-          .collection('violations')
-          .add(violationData.toMap());
 
       emit(ViolationSuccess());
     } catch (e) {

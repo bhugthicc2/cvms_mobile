@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cvms_mobile/features/activity/data/activity_repository.dart';
+import 'package:cvms_mobile/features/activity/models/activity_model.dart';
 import '../models/vehicle_model.dart';
 import '../models/vehicle_log_model.dart';
 
@@ -50,6 +52,22 @@ class VehicleRepository {
         'status': 'inside',
       });
     });
+
+    // Record activity
+    final activity = ActivityModel(
+      id: '',
+      vehicleId: vehicle.id,
+      action: "Entry Scan",
+      updatedBy: updatedBy,
+      timestamp: DateTime.now(),
+      additionalData: {
+        "plateNumber": vehicle.plateNumber,
+        "vehicleModel": vehicle.vehicleModel,
+        "vehicleColor": vehicle.vehicleColor,
+      },
+    );
+
+    await ActivityRepository().addActivity(activity);
   }
 
   /// End a vehicle session (exit scan)
@@ -84,6 +102,21 @@ class VehicleRepository {
         'status': 'outside',
       });
     });
+
+    await ActivityRepository().addActivity(
+      ActivityModel(
+        id: '',
+        vehicleId: vehicle.id,
+        action: "Exit Scan",
+        updatedBy: updatedBy,
+        timestamp: DateTime.now(),
+        additionalData: {
+          "plateNumber": vehicle.plateNumber,
+          "vehicleModel": vehicle.vehicleModel,
+          "vehicleColor": vehicle.vehicleColor,
+        },
+      ),
+    );
   }
 
   Future<void> handleEntryScan({

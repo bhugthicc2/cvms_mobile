@@ -1,4 +1,5 @@
 import 'package:cvms_mobile/features/about/pages/about_page.dart';
+import 'package:cvms_mobile/features/activity/bloc/activity_cubit.dart';
 import 'package:cvms_mobile/features/activity/pages/recent_activity_page.dart';
 import 'package:cvms_mobile/features/auth/pages/email_sent_page.dart';
 import 'package:cvms_mobile/features/auth/pages/forgot_password_page.dart';
@@ -13,6 +14,7 @@ import 'package:cvms_mobile/features/qr_scanner/pages/vehicle_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cvms_mobile/features/splash/pages/splash_page.dart';
 import 'package:cvms_mobile/features/auth/pages/login_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app_routes.dart';
 
 class AppRouteGenerator {
@@ -35,12 +37,19 @@ class AppRouteGenerator {
       case AppRoutes.vehicleScan:
         return MaterialPageRoute(builder: (_) => const VehicleScanPage());
       case AppRoutes.recentActivity:
-        return MaterialPageRoute(builder: (_) => const RecentActivityPage());
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (_) => ActivityCubit(),
+                child: const RecentActivityPage(),
+              ),
+        );
+
       case AppRoutes.vehicleInfo:
         final vehicle = settings.arguments as VehicleModel;
         return MaterialPageRoute(
           builder: (_) => VehicleInfoPage(vehicle: vehicle),
-        ); //todo
+        );
       case AppRoutes.profile:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
       case AppRoutes.about:

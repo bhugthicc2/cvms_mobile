@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VehicleLogModel {
-  final String id; // logID
-  final String vehicleId; // reference to Vehicle doc
+  final String id;
+  final String vehicleId;
   final String ownerName;
   final String plateNumber;
   final String vehicleModel;
   final DateTime timeIn;
   final DateTime? timeOut;
-  final String updatedBy; // who scanned
-  final String status; // "inside" or "outside"
+  final String updatedBy;
+  final String status;
   final int? durationMinutes;
 
   VehicleLogModel({

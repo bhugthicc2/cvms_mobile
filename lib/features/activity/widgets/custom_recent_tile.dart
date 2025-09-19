@@ -3,7 +3,22 @@ import 'package:cvms_mobile/core/theme/app_font_sizes.dart';
 import 'package:flutter/material.dart';
 
 class CustomRecentTile extends StatelessWidget {
-  const CustomRecentTile({super.key});
+  final String action;
+  final String timestamp;
+  final String plateNumber;
+  final String vehicleModel;
+  final String vehicleColor;
+  final String violation;
+
+  const CustomRecentTile({
+    super.key,
+    required this.action,
+    required this.timestamp,
+    required this.plateNumber,
+    required this.vehicleModel,
+    required this.vehicleColor,
+    required this.violation,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +39,22 @@ class CustomRecentTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Entry Scan',
+                action,
                 style: TextStyle(
                   fontFamily: 'Sora',
                   fontWeight: FontWeight.bold,
                   fontSize: AppFontSizes.bodySmall,
                 ),
               ),
-              Text(
-                overflow: TextOverflow.ellipsis,
-                ' - Aug. 23, 2025 - 10:15 AM',
-                style: TextStyle(
-                  fontFamily: 'Sora',
-                  fontWeight: FontWeight.w500,
-                  fontSize: AppFontSizes.bodySmall,
+              Expanded(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  ' - $timestamp',
+                  style: TextStyle(
+                    fontFamily: 'Sora',
+                    fontWeight: FontWeight.w500,
+                    fontSize: AppFontSizes.bodySmall,
+                  ),
                 ),
               ),
             ],
@@ -45,33 +62,16 @@ class CustomRecentTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                'T342354',
-                style: TextStyle(
-                  fontFamily: 'Sora',
-                  color: AppColors.grey300,
-                  fontWeight: FontWeight.bold,
-                  fontSize: AppFontSizes.bodySmall,
-                ),
-              ),
-              Text(
-                overflow: TextOverflow.ellipsis,
-                '- Honda Wave ',
-                style: TextStyle(
-                  color: AppColors.grey300,
-                  fontFamily: 'Sora',
-                  fontWeight: FontWeight.bold,
-                  fontSize: AppFontSizes.bodySmall,
-                ),
-              ),
-              Text(
-                overflow: TextOverflow.ellipsis,
-                '| Color: Orange',
-                style: TextStyle(
-                  color: AppColors.grey300,
-                  fontFamily: 'Sora',
-                  fontWeight: FontWeight.bold,
-                  fontSize: AppFontSizes.bodySmall,
+              Expanded(
+                child: Text(
+                  overflow: TextOverflow.ellipsis,
+                  "$plateNumber - $vehicleModel | ${action == 'Violation Report' ? 'Violation' : 'Color'}: ${action == 'Violation Report' ? violation : vehicleColor}",
+                  style: TextStyle(
+                    fontFamily: 'Sora',
+                    color: AppColors.grey300,
+                    fontWeight: FontWeight.bold,
+                    fontSize: AppFontSizes.bodySmall,
+                  ),
                 ),
               ),
             ],
