@@ -13,11 +13,20 @@ class BannerToast {
     required String message,
     BannerToastType type = BannerToastType.success,
     Duration duration = const Duration(seconds: 3),
+    bool showClose = true,
   }) {
     final overlay = Overlay.of(context);
     late OverlayEntry entry;
 
     final _BannerStyle style = _mapTypeToStyle(type);
+
+    var isRemoved = false;
+    void safeRemove() {
+      if (!isRemoved) {
+        isRemoved = true;
+        entry.remove();
+      }
+    }
 
     entry = OverlayEntry(
       builder:
@@ -25,11 +34,13 @@ class BannerToast {
             message: message,
             backgroundColor: style.backgroundColor,
             icon: style.icon,
+            showClose: showClose,
+            onClose: safeRemove,
           ),
     );
 
     overlay.insert(entry);
-    Timer(duration, () => entry.remove());
+    Timer(duration, safeRemove);
   }
 
   static _BannerStyle _mapTypeToStyle(BannerToastType type) {
@@ -63,11 +74,15 @@ class _BannerToastWidget extends StatelessWidget {
   final String message;
   final Color backgroundColor;
   final IconData icon;
+  final bool showClose;
+  final VoidCallback? onClose;
 
   const _BannerToastWidget({
     required this.message,
     required this.backgroundColor,
     required this.icon,
+    this.showClose = false,
+    this.onClose,
   });
 
   @override
@@ -85,7 +100,7 @@ class _BannerToastWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                color: AppColors.grey300.withValues(alpha: 0.2),
+                color: AppColors.grey500.withValues(alpha: 0.1),
                 blurRadius: 8,
                 spreadRadius: 4,
                 offset: const Offset(0, 4),
@@ -107,6 +122,21 @@ class _BannerToastWidget extends StatelessWidget {
                   ),
                 ),
               ),
+              if (showClose) ...[
+                AppSpacing.hSm,
+                InkWell(
+                  onTap: onClose,
+                  borderRadius: BorderRadius.circular(12),
+                  child: const Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Icon(
+                      PhosphorIconsLight.x,
+                      color: AppColors.white,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),

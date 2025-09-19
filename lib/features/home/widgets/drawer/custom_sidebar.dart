@@ -72,7 +72,7 @@ class CustomDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.primary,
               image: DecorationImage(
-                image: const AssetImage('assets/images/sidebar_header_bg.png'),
+                image: const AssetImage('assets/images/sidebar_header_bg.webp'),
                 fit: BoxFit.cover,
               ),
             ),

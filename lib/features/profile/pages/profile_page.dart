@@ -119,34 +119,46 @@ class _ProfilePageState extends State<ProfilePage> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    width: 10,
+                                    width: 7,
                                     color: AppColors.primary,
                                   ),
                                 ),
                                 child: CircleAvatar(
                                   child: Image.asset(
-                                    'assets/images/profile.png',
+                                    'assets/images/profile.webp',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
                             ),
                             Positioned(
-                              bottom: 2,
-                              right: 2,
+                              bottom: -0.5,
+                              right: -0.5,
                               child: Container(
                                 padding: AppSpacing.paddingAllXxs,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    width: 4,
-                                    color: AppColors.white,
+                                    width: 2,
+                                    color: AppColors.primary,
                                   ),
                                   shape: BoxShape.circle,
                                   color: AppColors.primary,
                                 ),
-                                child: Icon(
-                                  PhosphorIconsFill.camera,
-                                  color: AppColors.white,
+                                child: Container(
+                                  padding: AppSpacing.paddingAllXxs,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 4,
+                                      color: AppColors.white,
+                                    ),
+                                    shape: BoxShape.circle,
+                                    color: AppColors.primary,
+                                  ),
+                                  child: Icon(
+                                    PhosphorIconsFill.camera,
+                                    size: 20,
+                                    color: AppColors.white,
+                                  ),
                                 ),
                               ),
                             ),

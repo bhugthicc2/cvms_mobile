@@ -8,6 +8,7 @@ import 'package:cvms_mobile/features/auth/widgets/texts/custom_heading.dart';
 import 'package:cvms_mobile/features/auth/widgets/texts/custom_sub_heading.dart';
 import 'package:cvms_mobile/features/auth/widgets/visuals/custom_illustration.dart';
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/theme/app_spacing.dart';
 
@@ -29,17 +30,27 @@ class EmailSentPage extends StatelessWidget {
               AppSpacing.vXxl,
               Align(
                 alignment: Alignment.center,
-                child: CustomHeading(
-                  heading: 'Email has been sent',
-                  fontSize: AppFontSizes.bodyLarge,
-                  fontWeight: FontWeight.bold,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      PhosphorIconsFill.checkCircle,
+                      color: AppColors.success,
+                    ),
+                    AppSpacing.hXs,
+                    CustomHeading(
+                      heading: 'Email has been sent',
+                      fontSize: AppFontSizes.bodyLarge,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
                 ),
               ),
               Align(
                 alignment: Alignment.center,
                 child: CustomSubHeading(
                   subheading:
-                      'Please check your inbox and click inthe\n received link to reset your password.',
+                      'Please check your inbox and click in the\n received link to reset your password.',
                   fontSize: AppFontSizes.bodySmall,
                   fontColor: AppColors.grey400,
                 ),

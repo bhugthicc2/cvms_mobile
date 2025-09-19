@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            'assets/images/jrmsu_logo.png',
+                            'assets/images/jrmsu_logo.webp',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -155,6 +155,15 @@ class _LoginPageState extends State<LoginPage> {
                       // Login button
                       CustomButton(
                         onSubmit: () {
+                          final email = emailController.text.trim();
+                          if (email.isEmpty) {
+                            BannerToast.show(
+                              context,
+                              message: 'Email & password are empty',
+                              type: BannerToastType.error,
+                            );
+                            return;
+                          }
                           context.read<AuthCubit>().login(
                             emailController.text.trim(),
                             passwordController.text.trim(),

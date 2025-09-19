@@ -51,7 +51,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 child: CircleAvatar(
                   child: Image.asset(
-                    'assets/images/profile.png',
+                    'assets/images/profile.webp',
                     fit: BoxFit.cover,
                   ),
                 ),

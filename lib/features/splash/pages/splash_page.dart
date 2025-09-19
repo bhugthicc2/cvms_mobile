@@ -42,7 +42,7 @@ class _SplashPageState extends State<SplashPage> {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/splash_bg.png'),
+            image: AssetImage('assets/images/splash_bg.webp'),
             fit: BoxFit.cover,
           ),
         ),
@@ -50,7 +50,7 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            const CustomLogo(logo: 'assets/images/jrmsu_logo.png', size: 150),
+            const CustomLogo(logo: 'assets/images/jrmsu_logo.webp', size: 130),
             AppSpacing.vSm,
             CustomHeading(heading: AppStrings.appName),
             CustomSubHeading(subheading: AppStrings.appInfo),
